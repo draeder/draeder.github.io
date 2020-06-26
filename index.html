@@ -74,7 +74,10 @@ function bug(roomname, username){
   b.on("message", function(address, message) {
     log(message);
   });
-  b.on("seen", function(address) { log("[A new user joined]"); });
+  b.on("seen", function(address) {
+    if(!username){log("[new user joined]")} else {log("["+username+" joined]")}
+  });
+  b.heartbeat();
 }
 </script>
 </html>
