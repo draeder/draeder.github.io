@@ -48,7 +48,7 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
-        localStorage.setItem("room", address, roomname)
+        localStorage.setItem("room", roomname)
         bug(roomname, username)
       }
     }
