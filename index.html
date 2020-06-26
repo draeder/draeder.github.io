@@ -34,7 +34,7 @@
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
   console.log(room) 
-  var username;
+  var username=localStorage.getItem("name");
   var roomname=room;
   if (roomname){
     document.getElementById("roomname").hidden = true;
@@ -52,14 +52,15 @@
       }
     }
   } 
+  if(!username){
+    document.getElementById("name").hidden = true;
+  }
+
   document.getElementById("name").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
       ev.preventDefault();
-      document.getElementById("name").hidden = true;
       localStorage.setItem("name", username)
-      var testls = localStorage.getItem("name")
-      console.log(testls)
     }
   } 
   document.getElementById("input").onkeydown = function(ev) {
