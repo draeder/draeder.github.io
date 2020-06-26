@@ -48,11 +48,7 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
-        b = Bugout(roomname)
-        console.log(roomname)
-        b.on("message", function(address, message) {
-          log(message);
-        });
+        bug(roomname)
       }
     }
   } 
