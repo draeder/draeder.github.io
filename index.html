@@ -68,12 +68,13 @@
       ev.preventDefault();
     }
   }
-function bug(roomname){
+function bug(roomname, username){
   b = Bugout(roomname)
   console.log(roomname)
   b.on("message", function(address, message) {
     log(message);
   });
+  b.on("seen", function(address) { log("[A new user joined]"); });
 }
 </script>
 </html>
