@@ -48,9 +48,6 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
-        localStorage.setItem("room", roomname)
-        var testls = localStorage.getItem("room")
-        console.log(testls)
         bug(roomname, username)
       }
     }
@@ -60,6 +57,9 @@
       username=ev.target.textContent;
       ev.preventDefault();
       document.getElementById("name").hidden = true;
+      localStorage.setItem("name", username)
+      var testls = localStorage.getItem("name")
+      console.log(testls)
     }
   } 
   document.getElementById("input").onkeydown = function(ev) {
