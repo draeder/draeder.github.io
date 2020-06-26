@@ -49,6 +49,8 @@
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
         localStorage.setItem("room", roomname)
+        var testls = localStorage.getItem("room")
+        console.log(testls)
         bug(roomname, username)
       }
     }
