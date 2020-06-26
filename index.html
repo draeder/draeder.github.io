@@ -48,6 +48,7 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
+        localStorage()
         bug(roomname)
       }
     }
@@ -75,6 +76,7 @@ function bug(roomname, username){
     log(message);
   });
   b.on("seen", function(address) {
+    console.log(username)
     if(!username){log("[new user joined]")} else {log("["+username+" joined]")}
   });
   b.heartbeat();
