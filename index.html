@@ -40,7 +40,7 @@
   if (roomname){
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + roomname;
-    bug(roomname, username);
+    bug(roomname);
   } else {
     document.getElementById("roomname").onkeydown = function(ev) {
       if (ev.keyCode == 13) {
@@ -49,10 +49,11 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
-        bug(roomname, username)
+        bug(roomname)
       }
     }
   } 
+
   if(username){
     document.getElementById("name").hidden = true;
   }
@@ -63,7 +64,8 @@
       ev.preventDefault();
       localStorage.setItem("name", username)
     }
-  } 
+  }
+
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
@@ -73,13 +75,14 @@
       ev.preventDefault();
     }
   }
-function bug(roomname, username){
+
+function bug(roomname){
   b = Bugout(roomname)
   console.log(roomname)
   b.on("message", function(address, message) {
     log(message);
   });
-  b.on("seen", function(address, username) {
+  b.on("seen", function(address) {
     console.log(username)
     if(!username){log("[new user joined]")} else {log("["+username+" joined]")}
   });
