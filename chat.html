@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Simple P2P Social Network</title>
+  <style>
+    body { background-color: #333; font-size: 1.5em; padding: 0em 0.25em; }
+    pre { color: #fff; white-space: pre-wrap; word-wrap: break-word;}
+    #roomname { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
+    #roomname::before { content: "Room name: "; }
+    #name { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
+    #name::before { content: "Your name: "; }
+    #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
+    #input::before { content: ": "; }
+  </style>
+  <script>
+    function log(message) {
+      document.getElementById("log").textContent += message + "\n";
+    }
+  </script>
+  <script src="https://chr15m.github.io/bugout/bugout.min.js" type="application/javascript"></script>
+</head>
+<body>
+  <pre id="roomname" contenteditable="true"></pre>
+  <pre id="profilename"></pre>
+  <pre id="name" contenteditable="true"></pre>
+  <pre id="log"></pre>
+  <pre id="posts"></pre>
+  <pre id="input" contenteditable="true"></pre>
+</body>
+<script>
+  //var b = Bugout("raeder-io-chat");
+  //b.on("seen", function(address) { log(address + " [ seen ]"); });
+  //log(b.address() + " [ me ]");
+  
+  //b.on("message", function(address, message) {
+  //  log(message);
+  //});
+  var nname;
+  var roomname;
+  document.getElementById("roomname").onkeydown = function(ev) {
+    if (ev.keyCode == 13) {
+      roomname=ev.target.textContent;
+      ev.preventDefault();
+      document.getElementById("roomname").hidden = true;
+      document.getElementById("profilename").innerText = "Your room: " + roomname;
+      window.history.pushState("","","?r="+roomname);
+      b = Bugout(roomname)
+      b.on("message", function(address, message) {
+        log(message);
+      });
+    }
+  } 
+  document.getElementById("name").onkeydown = function(ev) {
+    if (ev.keyCode == 13) {
+      nname=ev.target.textContent;
+      ev.preventDefault();
+      document.getElementById("name").hidden = true;
+    }
+  } 
+  document.getElementById("input").onkeydown = function(ev) {
+    if (ev.keyCode == 13) {
+      if (b.lastwirecount) {
+        b.send(nname + ": " + ev.target.textContent);
+        ev.target.textContent = "";
+      }
+      ev.preventDefault();
+    }
+  }
+
+// Store the URL into variable 
+var url = window.location.href; 
+      
+// Created a URL object using URL() method 
+var parser = new URL(url); 
+
+// Search parameter in the URL 
+document.write(parser.searchParams + "<br>");
+
+</script>
+</html>
