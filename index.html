@@ -53,13 +53,14 @@
     document.getElementById("name").hidden = true;
   }
   var roomname=room;
-  document.getElementById("status").innerHTML = "Waiting for peers. <a href=''"+window.location.href+"'>Share this link</a>";
+  document.getElementById("status").innerHTML = "Waiting for peers. <div id='link'><a href=''"+window.location.href+"'>Share this link</a></div>";
 
   if (roomname){
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + roomname;
     bug(roomname);
   } else {
+    document.getElementById("link").hidden=true;
     document.getElementById("roomname").onkeydown = function(ev) {
       if (ev.keyCode == 13) {
         if(!roomname){roomname=ev.target.textContent}
@@ -67,6 +68,7 @@
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
+        document.getElementById("link").hidden=false;
         bug(roomname)
       }
     }
