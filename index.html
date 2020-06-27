@@ -14,7 +14,7 @@
     #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
     #input::before { content: ": "; }
     #status { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
-    #status::before { content: "Not Connected - No peers"; }
+    #input::before { content: "No Peers Connected"; }
   </style>
   <script>
     function log(message) {
@@ -88,7 +88,9 @@ function bug(roomname){
   b.once("seen", function(address) {
     console.log(username)
     if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
+    document.getElementById("status").hidden = true;
     document.getElementById("status").innerText = "Connected";
+    
   });
   b.heartbeat();
 }
