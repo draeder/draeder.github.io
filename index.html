@@ -37,6 +37,9 @@
   const room = urlObject.searchParams.get('r')
   console.log(room) 
   var username=localStorage.getItem("name");
+  if(!username){
+    username="Anonymous"
+  }
   console.log(username)
   var roomname=room;
   document.getElementById("status").innerText = "No Peers Connected";
