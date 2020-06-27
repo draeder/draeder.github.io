@@ -33,6 +33,7 @@
     }
   </script>
   <script src="https://chr15m.github.io/bugout/bugout.min.js" type="application/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" type="application/javascript"></script>
 </head>
 <body>
   <pre id="roomname" contenteditable="true"></pre>
@@ -133,7 +134,7 @@ function getOS() {
 
 //Un-remark if confirmed no Android support
 if(getOS = "Mac OS"){
-  document.getElementById("status").innerText = "Sorry " + getOS + " is not supported at this time."
+  document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> " + getOS + " is not supported at this time."
 }
 </script>
 </html>
