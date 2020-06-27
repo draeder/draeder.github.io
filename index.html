@@ -28,8 +28,10 @@
   }
   </style>
   <script>
+    //Log sent and recieved messages
     function log(message) {
       document.getElementById("log").textContent += message + "\n";
+      //document.getElementById("log").innerHTML += message + "\n";
     }
   </script>
   <script src="https://chr15m.github.io/bugout/bugout.min.js" type="application/javascript"></script>
@@ -49,13 +51,17 @@
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
   var username=localStorage.getItem("name");
+  var roomname=room;
   
+  //Hide username input if username is found in local storage
   if(username){
     document.getElementById("name").hidden = true;
   }
-  var roomname=room;
+ 
+  //Display default status message
   document.getElementById("status").innerHTML = "Waiting for peers. <div id='link'><a href=''"+window.location.href+"'>Share this link</a></div>";
 
+  //Check for stored room name
   if (roomname){
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + roomname;
@@ -75,6 +81,7 @@
     }
   }
 
+//Set room name
   document.getElementById("name").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
@@ -84,16 +91,18 @@
     }
   }
 
+//Send message
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
-        b.send("-->" + username + ": " + document.getElementById("input").value);
+        b.send("--> " + username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
       ev.preventDefault();
     }
   }
 
+//Create room and wait for, connect to peers
 function bug(roomname){
   b = Bugout(roomname)
   b.on("message", function(address, message) {
@@ -121,9 +130,22 @@ if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
 if(OSName == "Android"){
   document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
 }
+
+//Remove scripts from messages
+function stripScripts(s) {
+    var div = document.createElement('div');
+    div.innerHTML = s;
+    var scripts = div.getElementsByTagName('script');
+    var i = scripts.length;
+    while (i--) {
+      scripts[i].parentNode.removeChild(scripts[i]);
+    }
+    return div.innerHTML;
+}
+
 //Send disconnect message
 window.addEventListener("beforeunload", function (e) {
-  b.send("["+username + " disconnected]")
+  b.send("["+username + " left]")
 });
 </script>
 </html>
