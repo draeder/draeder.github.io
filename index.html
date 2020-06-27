@@ -35,12 +35,11 @@
   const url = window.location.href; 
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
-  console.log(room) 
   var username=localStorage.getItem("name");
   if(!username){
     username="Anonymous"
   }
-  console.log(username)
+
   var roomname=room;
   document.getElementById("status").innerText = "No Peers Connected";
   if (roomname){
@@ -85,12 +84,10 @@
 
 function bug(roomname){
   b = Bugout(roomname)
-  console.log(roomname)
   b.on("message", function(address, message) {
     log(message);
   });
   b.once("seen", function(address) {
-    console.log(username)
     if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
     document.getElementById("status").innerText = "Connected";
     
