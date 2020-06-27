@@ -71,8 +71,8 @@
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
         //b.send(username + ": " + ev.target.textContent);
-        b.send(username + ": " + document.getElementById("searchTxt").value);
-        document.getElementById("searchTxt").value = "";
+        b.send(username + ": " + document.getElementById("input").value);
+        document.getElementById("input").value = "";
       }
       ev.preventDefault();
     }
