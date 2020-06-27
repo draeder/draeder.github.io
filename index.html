@@ -66,6 +66,7 @@
       username=ev.target.textContent;
       ev.preventDefault();
       localStorage.setItem("name", username)
+      document.getElementById("name").hidden = true;
     }
   }
 
