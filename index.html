@@ -55,7 +55,7 @@
         if(!roomname){roomname=ev.target.textContent}
         ev.preventDefault();
         document.getElementById("roomname").hidden = true;
-        document.getElementById("roomname").innerText = "Your room: " + roomname;
+        document.getElementById("profilename").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
         bug(roomname)
       }
