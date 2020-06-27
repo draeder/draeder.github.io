@@ -82,7 +82,7 @@ function bug(roomname){
   b.on("message", function(address, message) {
     log(message);
   });
-  b.on("seen", function(address) {
+  b.once("seen", function(address) {
     console.log(username)
     if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
   });
