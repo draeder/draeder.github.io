@@ -88,7 +88,6 @@ function bug(roomname){
   b.once("seen", function(address) {
     console.log(username)
     if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
-    document.getElementById("status").hidden = true;
     document.getElementById("status").innerText = "Connected";
     
   });
