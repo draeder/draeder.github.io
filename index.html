@@ -121,6 +121,9 @@ if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
 if(OSName == "Android"){
   document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
 }
-
+//Send disconnect message
+window.addEventListener("beforeunload", function (e) {
+  b.send("["+username + " disconnected]")
+});
 </script>
 </html>
