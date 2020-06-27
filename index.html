@@ -14,7 +14,6 @@
     #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
     #input::before { content: ": "; }
     #status { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
-    #status::before { content: "No Peers Connected"; }
   </style>
   <script>
     function log(message) {
@@ -40,6 +39,7 @@
   var username=localStorage.getItem("name");
   console.log(username)
   var roomname=room;
+  document.getElementById("status").innerText = "No Peers Connected";
   if (roomname){
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + roomname;
