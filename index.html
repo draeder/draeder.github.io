@@ -13,6 +13,7 @@
     #name { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
     #name::before { content: "Your name: "; }
     #input { border-bottom: 1px solid #ccc; background-color: #383838; padding: 0.25em; outline: 0; }
+    #input::before { content: ": "; }
   </style>
   <script>
     function log(message) {
@@ -34,11 +35,14 @@
   const url = window.location.href; 
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
+  console.log(room) 
   var username=localStorage.getItem("name");
-  if(!username){
+  if(username){
+    document.getElementById("name").hidden = true;
+  } else if (!username){
     username="Anonymous"
   }
-
+  console.log(username)
   var roomname=room;
   document.getElementById("status").innerText = "No Peers Connected";
   if (roomname){
@@ -57,11 +61,6 @@
       }
     }
   } 
-
-  if(username){
-    document.getElementById("name").hidden = true;
-  }
-
   document.getElementById("name").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
@@ -83,10 +82,12 @@
 
 function bug(roomname){
   b = Bugout(roomname)
+  console.log(roomname)
   b.on("message", function(address, message) {
     log(message);
   });
   b.once("seen", function(address) {
+    console.log(username)
     if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
     document.getElementById("status").innerText = "Connected";
     
