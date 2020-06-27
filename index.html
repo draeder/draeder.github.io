@@ -39,10 +39,6 @@
   if(username){
     document.getElementById("name").hidden = true;
   }
-  else if (!username || username==""){
-    username="Anonymous"
-  }
-  
   var roomname=room;
   document.getElementById("status").innerText = "No Peers Connected";
 
@@ -67,7 +63,7 @@
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
       ev.preventDefault();
-      localStorage.setItem("name", username)
+      if(username){localStorage.setItem("name", username)}
       document.getElementById("name").hidden = true;
     }
   }
@@ -88,7 +84,10 @@ function bug(roomname){
     log(message);
   });
   b.once("seen", function(address) {
-    if(!username){log("[new user joined]")} else {b.send("["+username + " joined]")}
+    if(!username){
+      log("[Anonymous joined]")
+      username = "Anonymous";
+    } else {b.send("["+username + " joined]")}
     document.getElementById("status").innerText = "Connected";
   });
   b.heartbeat();
