@@ -34,7 +34,7 @@
   const url = window.location.href; 
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
-  var username=localStorage.getItem("name");
+  var username=localStorage.getItem("username");
   if(!username){
     username="Anonymous"
   }
