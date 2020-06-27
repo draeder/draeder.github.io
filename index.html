@@ -118,7 +118,7 @@ if (navigator.appVersion.indexOf("Android")!=-1) OSName="Android";
 if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
 
 document.write('Your OS: '+OSName);
-if(OSName = "Android"){
+if(OSName == "Android"){
   document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> " + OSName + " is not currenlty supported."
 }
 
