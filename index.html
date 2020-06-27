@@ -42,7 +42,7 @@
   document.getElementById("status").innerText = "No Peers Connected";
   if (roomname){
     document.getElementById("roomname").hidden = true;
-    document.getElementById("profilename").innerText = "Your room: " + roomname;
+    document.getElementById("roomname").innerText = "Your room: " + roomname;
     bug(roomname);
   } else {
     document.getElementById("roomname").onkeydown = function(ev) {
@@ -50,7 +50,7 @@
         if(!roomname){roomname=ev.target.textContent}
         ev.preventDefault();
         document.getElementById("roomname").hidden = true;
-        document.getElementById("profilename").innerText = "Your room: " + roomname;
+        document.getElementById("roomname").innerText = "Your room: " + roomname;
         window.history.pushState("","","?r="+roomname);
         bug(roomname)
       }
