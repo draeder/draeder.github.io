@@ -28,12 +28,9 @@
          }
         addFile()
 
-        async function getLocalStorage () {
-            for await (const filename of localStorage.getItem("file")){
-                console.log("LocalStorage: " + filename)
-            }
-        }
-        getLocalStorage()
+
+        console.log("LocalStorage: " + filename)
+
 
         async function catFile (filename) {
             for await (const data of node.cat(filename)) {
