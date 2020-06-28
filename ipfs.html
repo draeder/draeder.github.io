@@ -8,11 +8,11 @@
 
   </head>
   <script type="text/javascript">
-    
-    function upload() {
+    const ipfs = new Ipfs();
+    /*function upload() {
       const reader = new FileReader();
       reader.onloadend = function() {
-        const ipfs = window.Ipfs({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
+        const ipfs = window.ipfs({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
         const buf = buffer.Buffer(reader.result) // Convert data into buffer
         ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
           if(err) {
@@ -28,7 +28,7 @@
       }
       const photo = document.getElementById("photo");
       reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
-    }
+    }*/
     
     </script>
   <body>
