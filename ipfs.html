@@ -6,6 +6,14 @@
     <script src="https://wzrd.in/standalone/buffer"></script>
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
   </head>
+
+  <body>
+    <label for="file" style="cursor: pointer">
+        <img src="plus.png"><span id="file-text">Select a file</span>
+    </label>
+      
+    <input type="file" id="file" style="display: none"/>
+  </body>
   <script type="text/javascript">
 
 var input = document.getElementById('file');
@@ -49,11 +57,4 @@ function upload(){
       reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
     }*/
   </script>
-  <body>
-    <label for="file" style="cursor: pointer">
-        <img src="plus.png"><span id="file-text">Select a file</span>
-    </label>
-      
-    <input type="file" id="file" style="display: none"/>
-  </body>
 </html>
