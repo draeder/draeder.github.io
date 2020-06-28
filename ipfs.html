@@ -7,9 +7,17 @@
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
   </head>
   <script type="text/javascript">
-    document.getElementById("photo").onchange = function() {
-        console.log(photo.files[0].name)
-    }
+
+var input = document.getElementById('file');
+var label = document.getElementById('file-text');
+
+input.addEventListener('change', function() {
+  if(input.files.length > 0)
+    label.textContent = input.files[0].name;
+  else
+    label.textContent = 'Select a file';
+});
+
 function upload(){
     const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
     /*ipfs.util.addFromFs('path/to/a/file', { recursive: true }, (err, result) => {
@@ -42,18 +50,10 @@ function upload(){
     }*/
   </script>
   <body>
-    <form action="/">
-      <fieldset>
-        <legend>Upload photo</legend>
-        <input type="file" name="photo" id="photo">
-        <button type="button" onclick="upload()">Upload</button>
-      </fieldset>
-    </form>
-    </br>
-    </br>
-    <a id="url"></a>
-    </br>
-    </br>
-    <img id="output">
+    <label for="file" style="cursor: pointer">
+        <img src="plus.png"><span id="file-text">Select a file</span>
+    </label>
+      
+    <input type="file" id="file" style="display: none"/>
   </body>
 </html>
