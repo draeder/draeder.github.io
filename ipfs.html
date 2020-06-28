@@ -5,6 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://wzrd.in/standalone/buffer"></script>
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+
   </head>
   <script type="text/javascript">
     
@@ -28,9 +29,21 @@
       const photo = document.getElementById("photo");
       reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
     }
-
+    
     </script>
   <body>
-
+    <form action="/">
+      <fieldset>
+        <legend>Upload photo</legend>
+        <input type="file" name="photo" id="photo">
+        <button type="button" onclick="upload()">Upload</button>
+      </fieldset>
+    </form>
+    </br>
+    </br>
+    <a id="url"></a>
+    </br>
+    </br>
+    <img id="output">
   </body>
 </html>
