@@ -97,14 +97,14 @@
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
-        b.send("--> " + username + ": " + document.getElementById("input").value);
+        b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
       ev.preventDefault();
     }
   }
 
-//Create room and wait for, connect to peers
+//Create room and wait for connection to peers
 function bug(roomname){
   b = Bugout(roomname)
   b.on("message", function(address, message) {
