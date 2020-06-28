@@ -1,48 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>JavaScript file upload</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <script src="https://wzrd.in/standalone/buffer"></script>
-    <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
-  </head>
-  <script type="text/javascript">
-    
-    function upload() {
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-        const buf = buffer.Buffer(reader.result) // Convert data into buffer
-        ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
-          if(err) {
-            console.error(err)
-            return
-          }
-          let url = `https://ipfs.io/ipfs/${result[0].hash}`
-          console.log(`Url --> ${url}`)
-          document.getElementById("url").innerHTML= url
-          document.getElementById("url").href= url
-          document.getElementById("output").src = url
-        })
-      }
-      const photo = document.getElementById("photo");
-      reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
-    }
-    
-    </script>
-  <body>
-    <form action="/">
-      <fieldset>
-        <legend>Upload photo</legend>
-        <input type="file" name="photo" id="photo">
-        <button type="button" onclick="upload()">Upload</button>
-      </fieldset>
-    </form>
-    </br>
-    </br>
-    <a id="url"></a>
-    </br>
-    </br>
-    <img id="output">
-  </body>
+<head>
+<title>JavaScript file upload</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<script src="https://wzrd.in/standalone/buffer"></script>
+<script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
+</head>
+<script type="text/javascript">
+const node = await IPFS.create()
+
+const data = 'Hello, <YOUR NAME HERE>'
+
+// add your data to to IPFS - this can be a string, a Buffer,
+// a stream of Buffers, etc
+const results = node.add(data)
+
+// we loop over the results because 'add' supports multiple 
+// additions, but we only added one entry here so we only see
+// one log line in the output
+for await (const { cid } of results) {
+  // CID (Content IDentifier) uniquely addresses the data
+  // and can be used to get it again.
+  console.log(cid.toString())
+}
+
+const stream = node.cat('QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A')
+let data = ''
+
+for await (const chunk of stream) {
+  // chunks of data are returned as a Buffer, convert it back to a string
+  data += chunk.toString()
+}
+
+console.log(data)
+</script>
+<body>
+
+</body>
 </html>
