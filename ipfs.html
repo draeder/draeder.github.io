@@ -10,7 +10,7 @@
         window.node = node
 
         const status = node.isOnline() ? 'online' : 'offline'
-
+        var cidhash;
         console.log(`Node status: ${status}`)
         document.getElementById('status').innerHTML = `Node status: ${status}`
 
@@ -28,7 +28,7 @@
 
         addFile()
         async function catFile () {
-            for await (const data of node.cat(cid)) {
+            for await (const data of node.cat(cidhash)) {
                 console.log(data.toString())
             }
         }
