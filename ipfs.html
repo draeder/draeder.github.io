@@ -21,12 +21,14 @@ var label = document.getElementById('file-text');
 var file;
 
 input.addEventListener('change', function() {
-  if(input.files.length > 0)
+  if(input.files.length > 0){
     file = input.files[0].name
     label.textContent = input.files[0].name;
     upload(file)
-  else
+  }
+  else{
     label.textContent = 'Select a file';
+  }
 });
 
 function upload(file){
