@@ -9,7 +9,7 @@
   <script type="text/javascript">
 function upload(){
     const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-    var ipfs = window.IpfsApi()
+
     document.getElementById("photo").onchange = function(ev) {
         console.log(this.files[0].mozFullPath);
     }
