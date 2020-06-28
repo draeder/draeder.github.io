@@ -7,12 +7,11 @@
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
   </head>
   <script type="text/javascript">
+    document.getElementById("photo").onchange = function(ev) {
+        console.log(photos.files[0].name)
+    }
 function upload(){
     const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-
-    document.getElementById("photo").onchange = function(ev) {
-        console.log(this.files[0].mozFullPath);
-    }
     /*ipfs.util.addFromFs('path/to/a/file', { recursive: true }, (err, result) => {
     if (err) {
         throw err
