@@ -47,7 +47,9 @@
   <pre id="log"></pre>
   <pre id="posts"></pre>
   <input id="input" placeholder="Enter Message" onfocus="this.placeholder=''" onblur="this.placeholder='Enter Message'" style="width: 100%"></input>
-</body>
+
+  <input type="file" name="photo" id="photo">
+  <button type="button" onclick="upload()">Upload</button></body>
 <script>
   const url = window.location.href; 
   const urlObject = new URL(url);
@@ -143,6 +145,29 @@ function stripScripts(s) {
       scripts[i].parentNode.removeChild(scripts[i]);
     }
     return div.innerHTML;
+}
+
+// Upload file
+const ipfs = new Ipfs({ repo: 'ipfs-' + Math.random() })
+const { Buffer } = Ipfs
+ipfs.once('ready', () => {
+  console.log('Status: ', ipfs.isOnline() ? 'online' : 'offline')
+})
+function upload() {
+  const reader = new FileReader();
+  reader.onloadend = function () {
+    const buf = buffer.Buffer(reader.result) // Convert data into buffer
+    ipfs.add(buf, (err, result) => { // Upload buffer to IPFS
+      if (err) {
+        console.error(err)
+        return
+      }
+      let url = `https://ipfs.io/ipfs/${result[0].hash}`
+      console.log(`Url --> ${url}`)
+    })
+  }
+  const photo = document.getElementById("photo");
+  reader.readAsArrayBuffer(photo.files[0]); 
 }
 
 //Send disconnect message
