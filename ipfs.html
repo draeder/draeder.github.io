@@ -445,7 +445,7 @@ let fileSize = 0
 
 let node
 let info
-const { Buffer } = Ipfs
+const { Buffer } = IpfsApi
 
 /* ===========================================================================
    Start the IPFS node
@@ -466,7 +466,7 @@ function start () {
     }
     
     try {
-      node = new Ipfs(options)
+      node = new IpfsApi(options)
     } catch(err) {
       handleOnError(err);
     }
