@@ -18,22 +18,25 @@
 
 var input = document.getElementById('file');
 var label = document.getElementById('file-text');
+var file;
 
 input.addEventListener('change', function() {
   if(input.files.length > 0)
+    file = input.files[0].name
     label.textContent = input.files[0].name;
+    upload(file)
   else
     label.textContent = 'Select a file';
 });
 
-function upload(){
+function upload(file){
     const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-    /*ipfs.util.addFromFs('path/to/a/file', { recursive: true }, (err, result) => {
+    ipfs.util.addFromFs(file, { recursive: true }, (err, result) => {
     if (err) {
         throw err
     }
         console.log(result)
-    })*/
+    })
 }
 
     /*function upload() {
