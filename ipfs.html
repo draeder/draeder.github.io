@@ -1,49 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title>JavaScript file upload</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <script src="https://wzrd.in/standalone/buffer"></script>
+<head>
+    <title>IPFS in the Browser</title>
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', async () => {
+        const node = await Ipfs.create({ repo: 'ipfs-' + Math.random() })
+        window.node = node
 
-  </head>
-  <script type="text/javascript">
-    const ipfs = new Ipfs();
-    /*function upload() {
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        const ipfs = window.ipfs({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-        const buf = buffer.Buffer(reader.result) // Convert data into buffer
-        ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
-          if(err) {
-            console.error(err)
-            return
-          }
-          let url = `https://ipfs.io/ipfs/${result[0].hash}`
-          console.log(`Url --> ${url}`)
-          document.getElementById("url").innerHTML= url
-          document.getElementById("url").href= url
-          document.getElementById("output").src = url
-        })
-      }
-      const photo = document.getElementById("photo");
-      reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
-    }*/
-    
+        const status = node.isOnline() ? 'online' : 'offline'
+
+        console.log(`Node status: ${status}`)
+        document.getElementById('status').innerHTML = `Node status: ${status}`
+
+        // You can write more code here to use it. Use methods like
+        // node.add, node.get. See the API docs here:
+        // https://github.com/ipfs/js-ipfs/tree/master/packages/interface-ipfs-core
+    })
     </script>
-  <body>
-    <form action="/">
-      <fieldset>
-        <legend>Upload photo</legend>
-        <input type="file" name="photo" id="photo">
-        <button type="button" onclick="upload()">Upload</button>
-      </fieldset>
-    </form>
-    </br>
-    </br>
-    <a id="url"></a>
-    </br>
-    </br>
-    <img id="output">
-  </body>
+</head>
+<body>
+    <h1>IPFS in the Browser</h1>
+    <p>This page creates an IPFS node in your browser and drops it into the global Javascript namespace as <b><em style="background-color:#d7d6d6">node</em></b>. Open the console to play around with it.</p>
+    <p>Note that opening two tabs of this page in the same browser won't work well, because they will share node configuration. You'll end up trying to run two instances of the same node, with the same private key and identity, which is a Bad Idea.</p>
+    <h1 id="status">Node status: offline</h1>
+
+    <h2>Some suggestions</h2>
+
+    <p>Try adding a new file:</p>
+
+    <code style="display:block; white-space:pre-wrap; background-color:#d7d6d6">
+    async function addFile () {
+        for await (const { cid } of node.add('Hello world!')) {
+        console.log('successfully stored', cid)
+        }
+    }
+
+    addFile()
+    </code>
+
+    <p>You can cat that same file. If you used the exact same string as above ('Hello world!') you should have an hash like this: 'QmQzCQn4puG4qu8PVysxZmscmQ5vT1ZXpqo7f58Uh9QfyY'</p>
+
+    <code style="display:block; white-space:pre-wrap; background-color:#d7d6d6">
+    async function catFile () {
+        for await (const data of node.cat('QmQzCQn4puG4qu8PVysxZmscmQ5vT1ZXpqo7f58Uh9QfyY')) {
+        console.log(data.toString())
+        }
+    }
+
+    catFile()
+    </code>
+</body>
 </html>
