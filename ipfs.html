@@ -6,42 +6,11 @@
     <script src="https://wzrd.in/standalone/buffer"></script>
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
   </head>
-
-  <body>
-    <label for="file" style="cursor: pointer">
-        <img src="plus.png"><span id="file-text">Select a file</span>
-    </label>
-      
-    <input type="file" id="file" style="display: none"/>
-  </body>
   <script type="text/javascript">
 
-var input = document.getElementById('file');
-var label = document.getElementById('file-text');
-var file;
-
-input.addEventListener('change', function() {
-  if(input.files.length > 0){
-    file = input.files[0].name
-    label.textContent = input.files[0].name;
-    upload(file)
-  }
-  else{
-    label.textContent = 'Select a file';
-  }
-});
-
-function upload(file){
-    const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
-    ipfs.util.addFromFs(file, { recursive: true }, (err, result) => {
-    if (err) {
-        throw err
-    }
-        console.log(result)
-    })
-}
-
-    /*function upload() {
+function upload(){
+    
+    function upload() {
       const reader = new FileReader();
       reader.onloadend = function() {
         const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
@@ -60,6 +29,21 @@ function upload(file){
       }
       const photo = document.getElementById("photo");
       reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
-    }*/
+    }
   </script>
+  <body>
+    <form action="/">
+      <fieldset>
+        <legend>Upload photo</legend>
+        <input type="file" name="photo" id="photo">
+        <button type="button" onclick="upload()">Upload</button>
+      </fieldset>
+    </form>
+    </br>
+    </br>
+    <a id="url"></a>
+    </br>
+    </br>
+    <img id="output">
+  </body>
 </html>
