@@ -10,7 +10,7 @@
     function upload() {
       const reader = new FileReader();
       reader.onloadend = function() {
-        const ipfs = window.IpfsApi('cloudflare-ipfs.com', 5001, {protocol: 'https'}) // Connect to IPFS
+        const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
         const buf = buffer.Buffer(reader.result) // Convert data into buffer
         ipfs.files.add(buf, (err, result) => { // Upload buffer to IPFS
           if(err) {
