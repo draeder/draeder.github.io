@@ -22,17 +22,25 @@
             for await (const { cid } of node.add('Hello world!')) {
                 console.log('successfully stored', cid)
                 cidhash=cid.toBaseEncodedString()
+                localStorage.setItem("file", cidhash)
                 console.log(cidhash)
             }
          }
         addFile()
- 
-        async function catFile () {
-            for await (const data of node.cat(cidhash)) {
-                console.log(data.toString())
+        async function getLocalStorage () {
+            for await (const filename of localStorage.getItem("file")){
+
+                async function catFile (filename) {
+                    for await (const data of node.cat(filename)) {
+                        console.log(data.toString())
+                    }
+                }
+                catFile()
+
             }
         }
-        catFile()
+        getLocalStorage()
+
 
     })
     </script>
