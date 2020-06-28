@@ -7,7 +7,21 @@
     <script src="https://unpkg.com/ipfs-api/dist/index.js" crossorigin="anonymous"></script>
   </head>
   <script type="text/javascript">
-    function upload() {
+function upload(){
+    const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
+    var ipfs = window.IpfsApi()
+    document.getElementById("photo").onchange = function(ev) {
+        console.log(this.files[0].mozFullPath);
+    }
+    /*ipfs.util.addFromFs('path/to/a/file', { recursive: true }, (err, result) => {
+    if (err) {
+        throw err
+    }
+        console.log(result)
+    })*/
+}
+
+    /*function upload() {
       const reader = new FileReader();
       reader.onloadend = function() {
         const ipfs = window.IpfsApi({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' }) // Connect to IPFS
@@ -26,7 +40,7 @@
       }
       const photo = document.getElementById("photo");
       reader.readAsArrayBuffer(photo.files[0]); // Read Provided File
-    }
+    }*/
   </script>
   <body>
     <form action="/">
