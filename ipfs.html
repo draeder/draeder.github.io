@@ -21,7 +21,7 @@
         async function addFile () {
             for await (const { cid } of node.add('Hello world!')) {
                 console.log('successfully stored', cid)
-                console.log(node._cid.toBaseEncodedString())
+                console.log(cid.toBaseEncodedString())
             }
          }
 
