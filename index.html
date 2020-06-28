@@ -30,7 +30,9 @@
   <script>
     //Log sent and recieved messages
     function log(message) {
-      document.getElementById("log").textContent += message + "\n";
+      var d = new Date();
+      var n = d.getTime();
+      document.getElementById("log").textContent += n + " " + message + "\n";
       //document.getElementById("log").innerHTML += message + "\n";
     }
   </script>
