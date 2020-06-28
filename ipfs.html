@@ -26,6 +26,13 @@
          }
 
         addFile()
+        async function catFile () {
+            for await (const data of node.cat(cid)) {
+                console.log(data.toString())
+            }
+        }
+
+        catFile()
 
     })
     </script>
