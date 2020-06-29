@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         var msg = document.getElementById("input").value
         var d = new Date();
         var n = d.toLocaleTimeString();
-        
+        console.log(n)
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
