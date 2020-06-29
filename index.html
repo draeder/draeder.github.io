@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //JS-IPFS variables
   const nodeId = localStorage.getItem("ipfsID")
-  if(!nodeID){
+  if(!nodeId ){
     const nodeId = 'ipfs-' + Math.random()
     localStorage.setItem("ipfsID", nodeID)
   }
