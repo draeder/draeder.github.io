@@ -46,6 +46,17 @@
 
         await Ipfs.pubsub.subscribe(topic, receiveMsg)
         console.log(`subscribed to ${topic}`)
+
+        const ipfs = new IPFS({
+            EXPERIMENTAL: {
+                pubsub: true // required, enables pubsub
+            }
+        })
+
+        ipfs.once('ready', () => {
+            console.log("pubsub is ready")
+        })
+
     })
     </script>
 </head>
