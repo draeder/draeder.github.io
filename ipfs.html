@@ -40,6 +40,12 @@
             }
         }
         catFile(filename)
+
+        const topic = 'fruit-of-the-day'
+        const receiveMsg = (msg) => console.log(msg.data.toString())
+
+        await ipfs.pubsub.subscribe(topic, receiveMsg)
+        console.log(`subscribed to ${topic}`)
     })
     </script>
 </head>
