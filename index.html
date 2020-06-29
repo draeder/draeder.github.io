@@ -37,6 +37,7 @@
   </script>
   <script src="https://chr15m.github.io/bugout/bugout.min.js" integrity="sha384-wp4EShIOwQyaJreUc1RAWQrSvOHeLb5fcXYwYdL5Lbj++G7B0touaxiqqj5DKQaY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" type="application/javascript"></script>
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
 </head>
 <body>
   <pre id="roomname" contenteditable="true"></pre>
@@ -110,6 +111,19 @@ function bug(roomname){
   b = Bugout(roomname)
   b.on("message", function(address, message) {
     log(message);
+    //Store messages locally
+    var db = new Dexie("message-database");
+    db.version(1).stores({
+        room: 'name,shoeSize'
+    });
+    db.friends.put({name: "Nicolas", shoeSize: 8}).then (function(){
+        return db.friends.get('Nicolas');
+    }).then(function (friend) {
+        alert ("Nicolas has shoe size " + friend.shoeSize);
+    }).catch(function(error) {
+      console.log("IndexedDB Error: " + error);
+    });
+
   });
   b.once("seen", function(address) {
     if(!username){
