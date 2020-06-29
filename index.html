@@ -63,17 +63,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log(`Node status: ${status}`)
   document.getElementById('status').innerHTML = `${status}`
 
-  //Bugout variables
+  //Peer.ooo variables
   const url = window.location.href; 
   const urlObject = new URL(url);
   var username=localStorage.getItem("name");
   var roomname = urlObject.searchParams.get('r')
-
-  //initiate Dexie
-  var db = new Dexie("message-database");
-  db.version(1).stores({
-    posts: '++id, roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
-  }); 
 
   //Hide username input if username is found in local storage
   if(username){
@@ -89,8 +83,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + arrRoom[0];
     bugo(roomname);
-  } 
-  //Wait for room name
+  }
+
+  //Check/wait for room name
   else {
     document.getElementById("link").hidden=true;
     document.getElementById("roomname").onkeydown = function(ev) {
@@ -112,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-//Set user name
+  //Wait for and set user name
   document.getElementById("name").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
@@ -125,7 +120,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-//Send message
+  //initiate Dexie
+  var db = new Dexie("message-database");
+  db.version(1).stores({
+    posts: '++id, roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
+  });
+
+  //Send message
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
@@ -141,9 +142,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             return db.posts.get(date);
           })
           .then(function(post){
-            var toIpfs=JSON.stringify(post)
+            var toIpfs = JSON.stringify(post)
+            var id = post.id
             console.log(toIpfs)
-            addFile(toIpfs)
+            addFile(toIpfs,id)
           })
           .catch(function(error){
             console.log(error)
@@ -155,14 +157,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-// store messages in ipfs
-  async function addFile(toIpfs) {
+  // Store messages in ipfs
+  async function addFile(toIpfs, id) {
     console.log(toIpfs)
+    console.log(id)
     for await (const { cid } of node.add(toIpfs)) {
       console.log('successfully stored', cid)
-      var cidhash=cid.toBaseEncodedString()
-      console.log(cidhash)
-      localStorage.setItem("lastIpfsCID", cidhash)
+      var cidHash=cid.toBaseEncodedString()
+      console.log(cidHash)
+      localStorage.setItem("lastIpfsCID", cidHash)
+      db.posts.update(id,{ipfs: cidHash})
     }
   }
 
@@ -197,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
   }
 
-  //Remove scripts from incoming messages
+  //Remove scripts from messages
   function stripScripts(s) {
       var div = document.createElement('div');
       div.innerHTML = s;
@@ -210,8 +214,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   //Make ID hashes
-  //console.log(generateId())
-  //console.log(generateId(20))
   function dec2hex (dec) {
     return ('0' + dec.toString(16)).substr(-2)
   }
@@ -226,7 +228,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     b.send("["+username + " left]")
   })
 
-//clean up old ipfs data
+  //clean up old ipfs data
   async function clearDB () {
     const dbs = await window.indexedDB.databases()
     dbs.forEach(db => { 
