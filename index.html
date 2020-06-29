@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   //Bugout variables
   const url = window.location.href; 
   const urlObject = new URL(url);
-  const username=localStorage.getItem("name");
+  var username=localStorage.getItem("name");
   var roomname = urlObject.searchParams.get('r')
 
   //Hide username input if username is found in local storage
