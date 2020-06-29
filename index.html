@@ -38,6 +38,7 @@
   <script src="https://chr15m.github.io/bugout/bugout.min.js" integrity="sha384-wp4EShIOwQyaJreUc1RAWQrSvOHeLb5fcXYwYdL5Lbj++G7B0touaxiqqj5DKQaY" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" type="application/javascript"></script>
   <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
 </head>
 <body>
   <pre id="roomname" contenteditable="true"></pre>
@@ -51,6 +52,8 @@
   <!--input type="file" name="photo" id="photo">
   <button type="button" onclick="upload()">Upload</button></body-->
 <script>
+document.addEventListener('DOMContentLoaded', async () => {
+
   const url = window.location.href; 
   const urlObject = new URL(url);
   const room = urlObject.searchParams.get('r')
@@ -102,18 +105,15 @@
         var msg = document.getElementById("input").value
         var d = new Date();
         var n = d.toLocaleTimeString();
+        
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
-            posts: 'date, time, name, message'
+            posts: 'date, time, name, message, messageID'
         });        
         db.posts.put({date: d, time: n, name: username, message: msg }).then (function(){ // Store messages
             //return db.posts.get('Nicolas'); // Return messages
-        }).then(function (friend) {
-            //alert ("Nicolas has shoe size " + room.shoeSize);
-        }).catch(function(error) {
-          console.log("IndexedDB Error: " + error);
-        });
+        })
 
         b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
@@ -122,52 +122,92 @@
     }
   }
 
-//Create room and wait for connection to peers
-function bug(roomname){
-  b = Bugout(roomname)
-  b.on("message", function(address, message) {
-    var d = new Date();
-    var n = d.toLocaleTimeString();
-    log(message);
-  });
-  b.once("seen", function(address) {
-    if(!username){
-      log("[Anonymous joined]")
-      username = "Anonymous";
-    } else {b.send("["+username + " joined]")}
-    document.getElementById("status").innerText = "Connected";
-  });
-  b.heartbeat();
-}
+  //Create room and wait for connection to peers
+  function bug(roomname){
+    b = Bugout(roomname)
+    b.on("message", function(address, message) {
+      var d = new Date();
+      var n = d.toLocaleTimeString();
+      log(message);
+    });
+    b.once("seen", function(address) {
+      if(!username){
+        log("[Anonymous joined]")
+        username = "Anonymous";
+      } else {b.send("["+username + " joined]")}
+      document.getElementById("status").innerText = "Connected";
+    });
+    b.heartbeat();
+  }
 
-//Check OS and warn Android users of limited/no functionality
-var OSName="Unknown OS";
-if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
-if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
-if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
-if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
-if (navigator.appVersion.indexOf("Android")!=-1) OSName="Android";
-if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
+  //Check OS and warn Android users of limited/no functionality
+  var OSName="Unknown OS";
+  if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+  if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+  if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+  if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+  if (navigator.appVersion.indexOf("Android")!=-1) OSName="Android";
+  if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
 
-if(OSName == "Android"){
-  document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
-}
+  if(OSName == "Android"){
+    document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
+  }
 
-//Remove scripts from incoming messages
-function stripScripts(s) {
-    var div = document.createElement('div');
-    div.innerHTML = s;
-    var scripts = div.getElementsByTagName('script');
-    var i = scripts.length;
-    while (i--) {
-      scripts[i].parentNode.removeChild(scripts[i]);
+  //Remove scripts from incoming messages
+  function stripScripts(s) {
+      var div = document.createElement('div');
+      div.innerHTML = s;
+      var scripts = div.getElementsByTagName('script');
+      var i = scripts.length;
+      while (i--) {
+        scripts[i].parentNode.removeChild(scripts[i]);
+      }
+      return div.innerHTML;
+  }
+
+  //Send disconnect message
+  window.addEventListener("beforeunload", function (e) {
+    b.send("["+username + " left]")
+  })
+
+
+
+  const nodeId = 'ipfs-' + Math.random()
+  const node = await Ipfs.create({ repo: nodeId })
+  console.log("Your node: " + nodeId)
+  window.node = node
+
+  const status = node.isOnline() ? 'online' : 'offline'
+
+  console.log(`Node status: ${status}`)
+  document.getElementById('status').innerHTML = `Node status: ${status}`
+
+  // You can write more code here to use it. Use methods like
+  // node.add, node.get. See the API docs here:
+  // https://github.com/ipfs/js-ipfs/tree/master/packages/interface-ipfs-core
+  
+  //upload file
+  async function addFile () {
+    for await (const { cid } of node.add('Yessireeebob!')) {
+      console.log('successfully stored', cid)
+      cidhash=cid.toBaseEncodedString()
+      localStorage.setItem("file", cidhash)
+      console.log(cidhash)
     }
-    return div.innerHTML;
-}
+  }
+  addFile()
+  
+  filename=localStorage.getItem("file")
+  console.log("LocalStorage: " + filename)
+  
+  //return file
+  async function catFile (filename) {
+    for await (const data of node.cat(filename)) {
+      console.log(data.toString())
+    }
+  }
+  catFile(filename)
 
-//Send disconnect message
-window.addEventListener("beforeunload", function (e) {
-  b.send("["+username + " left]")
-});
+})
 </script>
 </html>
