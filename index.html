@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const urlObject = new URL(url);
   const username=localStorage.getItem("name");
   var roomname = urlObject.searchParams.get('r')
-  var fullroomname
 
   //Hide username input if username is found in local storage
   if(username){
@@ -131,7 +130,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         var d = new Date();
         var n = d.toLocaleTimeString();
         var msgID = generateId();
-        var fullroomname = localStorage.getItem("fullroomname")
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
