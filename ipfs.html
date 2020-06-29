@@ -42,13 +42,13 @@
         catFile(filename)
 
     const ipfs = new IPFS({
-    EXPERIMENTAL: {
-        pubsub: true // required, enables pubsub
-    }
+        EXPERIMENTAL: {
+            pubsub: true // required, enables pubsub
+        }
     })
 
     ipfs.once('ready', () => {
-    // node is ready
+        console.log("*** PubSub is ready ***")
     })
 
     })
