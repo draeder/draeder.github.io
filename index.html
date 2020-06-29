@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const urlObject = new URL(url);
   const username=localStorage.getItem("name");
   var roomname = urlObject.searchParams.get('r')
+  var fullroomname
 
   //Hide username input if username is found in local storage
   if(username){
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(!roomname){
           roomname=ev.target.textContent
           var roomID = generateId();
-          var fullroomname = roomname+'-'+roomID
+          fullroomname = roomname+'-'+roomID
           localStorage["roomname"]=roomname
           localStorage["fullroomname"]=fullroomname      
         }
