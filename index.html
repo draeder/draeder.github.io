@@ -99,6 +99,10 @@
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
+        var msg = document.getElementById("input").value
+
+
+
         b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
@@ -110,6 +114,16 @@
 function bug(roomname){
   b = Bugout(roomname)
   b.on("message", function(address, message) {
+    var d = new Date();
+    var n = d.toLocaleTimeString();
+    db.posts.put({date: d, time: n, name: username, message: msg }).then (function(){ // Store messages
+        //return db.posts.get('Nicolas'); // Return messages
+    }).then(function (friend) {
+        //alert ("Nicolas has shoe size " + room.shoeSize);
+    }).catch(function(error) {
+      console.log("IndexedDB Error: " + error);
+    });
+
     log(message);
   });
   b.once("seen", function(address) {
@@ -123,17 +137,10 @@ function bug(roomname){
 }
 
 
-    //Store messages locally
+    //Create IndexedDB database
     var db = new Dexie("message-database");
     db.version(1).stores({
-        posts: 'name,shoeSize'
-    });
-    db.posts.put({name: "Nicolas", shoeSize: 8}).then (function(){
-        return db.room.get('Nicolas');
-    }).then(function (friend) {
-        alert ("Nicolas has shoe size " + room.shoeSize);
-    }).catch(function(error) {
-      console.log("IndexedDB Error: " + error);
+        posts: 'date, time, name, message'
     });
 
 //Check OS and warn Android users of limited/no functionality
@@ -149,7 +156,7 @@ if(OSName == "Android"){
   document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
 }
 
-//Remove scripts from messages
+//Remove scripts from incoming messages
 function stripScripts(s) {
     var div = document.createElement('div');
     div.innerHTML = s;
