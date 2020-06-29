@@ -40,21 +40,15 @@
             }
         }
         catFile(filename)
-
-        const room = Room(node, 'room-name')
-        room.on('peer joined', (peer) => {
-            console.log('Peer joined the room', peer)
+        const msg = new Ipfs({
+            EXPERIMENTAL: {
+                pubsub: true // required, enables pubsub
+            }
         })
-
-        room.on('peer left', (peer) => {
-            console.log('Peer left...', peer)
+        msg.once('ready', () => {
+            console.log("***PUBSUB READY***")
         })
-
-        // now started to listen to room
-        room.on('subscribed', () => {
-            console.log('Now connected!')
-        })
-    })
+})
     </script>
 </head>
 <body>
