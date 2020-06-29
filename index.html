@@ -128,10 +128,10 @@ function bug(roomname){
     db.version(1).stores({
         room: 'name,shoeSize'
     });
-    db.friends.put({name: "Nicolas", shoeSize: 8}).then (function(){
-        return db.friends.get('Nicolas');
+    db.room.put({name: "Nicolas", shoeSize: 8}).then (function(){
+        return db.room.get('Nicolas');
     }).then(function (friend) {
-        alert ("Nicolas has shoe size " + friend.shoeSize);
+        alert ("Nicolas has shoe size " + room.shoeSize);
     }).catch(function(error) {
       console.log("IndexedDB Error: " + error);
     });
