@@ -102,6 +102,11 @@
         var msg = document.getElementById("input").value
         var d = new Date();
         var n = d.toLocaleTimeString();
+        //Create IndexedDB database
+        var db = new Dexie("message-database");
+        db.version(1).stores({
+            posts: 'date, time, name, message'
+        });        
         db.posts.put({date: d, time: n, name: username, message: msg }).then (function(){ // Store messages
             //return db.posts.get('Nicolas'); // Return messages
         }).then(function (friend) {
@@ -134,14 +139,6 @@ function bug(roomname){
   });
   b.heartbeat();
 }
-
-
-    //Create IndexedDB database
-    var db = new Dexie("message-database");
-    db.version(1).stores({
-        posts: 'date, time, name, message'
-    });
-
 
 //Check OS and warn Android users of limited/no functionality
 var OSName="Unknown OS";
