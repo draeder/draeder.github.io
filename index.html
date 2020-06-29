@@ -75,6 +75,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   var username=localStorage.getItem("name");
   var roomname = urlObject.searchParams.get('r')
 
+  //initiate Dexie
+  var db = new Dexie("message-database");
+  db.version(1).stores({
+          posts: 'roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
+  }); 
+
   //Hide username input if username is found in local storage
   if(username){
     document.getElementById("name").hidden = true;
@@ -134,36 +140,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         var n = d.toLocaleTimeString();
         var msgID = generateId();
         var fullroomname = localStorage.getItem("fullroomname")
-        var userID = localStorage.getItem("userID")
-        //Create IndexedDB database
-        var db = new Dexie("message-database");
-        db.version(1).stores({
-            posts: 'roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
-        });        
-        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID}).then (function(){ // Store messages
-          var fullmessage = db.posts.get('Nicolas'); // Return messages
-          async function addFile () {
-            for await (const { cid } of node.add(fullmessage)) {
-              console.log('successfully stored', cid)
-              cidhash=cid.toBaseEncodedString()
-              //localStorage.setItem("file", cidhash)
-              console.log(cidhash)
-              db.friends.update("roomname", {ipfs: cid}).then(function (updated) {
-                if (updated)
-                  console.log ("Updated Dexie with CID");
-                else
-                  console.log ("Nothing was updated ");
-              });              
-            }
-            addFile()
-          }
-
+        var userID = localStorage.getItem("userID")      
+        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID})
+        .then (function(){ // Store messages in ipfs
+          var fullFile = JSON.stringify(db.posts.get(msgID));
+          console.log(fullFile)
+          addFile(fullFile)
         })
 
         b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
       ev.preventDefault();
+    }
+  }
+
+// store messages in ipfs
+  async function addFile (fullFile) {
+    var fullmessage = "My cool file"
+    console.log(fullFile)
+    for await (const { cid } of node.add(fullFile)) {
+      console.log('successfully stored', cid)
+      cidhash=cid.toBaseEncodedString()
+      console.log(cidhash)
+      localStorage.setItem("lastIpfsCID", cidhash)
     }
   }
 
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // https://github.com/ipfs/js-ipfs/tree/master/packages/interface-ipfs-core
   //js-ipfs upload file
-  async function addFile () {
+  /*async function addFile () {
     for await (const { cid } of node.add('Yessireeebob!')) {
       console.log('successfully stored', cid)
       cidhash=cid.toBaseEncodedString()
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log(data.toString())
     }
   }
-  catFile(filename)
+  catFile(filename)*/
 
 })
 </script>
