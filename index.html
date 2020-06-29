@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         var d = new Date();
         var n = d.toLocaleTimeString();
         var msgID = generateId();
+        var fullroomname = localStorage.getItem("fullroomname")
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
