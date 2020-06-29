@@ -184,12 +184,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   //Send disconnect message
   window.addEventListener("beforeunload", function (e) {
     b.send("["+username + " left]")
-    async function clearDB () {
-      const dbs = await window.indexedDB.databases()
-      dbs.forEach(db => { window.indexedDB.deleteDatabase(db.name) })
-    }
     clearDB()
   })
+
+//clean up old ipfs data
+  async function clearDB () {
+      const dbs = await window.indexedDB.databases()
+      dbs.forEach(db => { 
+        window.indexedDB.deleteDatabase(db.name) 
+        console.log("Cleared IndexDB")
+      })
+  }
 
   // You can write more code here to use it. Use methods like
   // node.add, node.get. See the API docs here:
