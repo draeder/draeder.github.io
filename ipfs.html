@@ -5,8 +5,9 @@
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', async () => {
-        const node = await Ipfs.create({ repo: 'ipfs-' + Math.random() })
-        console.log("Your node: " + node)
+        const nodeId = 'ipfs-' + Math.random()
+        const node = await Ipfs.create({ repo: nodeId })
+        console.log("Your node: " + nodeId)
         window.node = node
 
         const status = node.isOnline() ? 'online' : 'offline'
@@ -17,9 +18,10 @@
         // You can write more code here to use it. Use methods like
         // node.add, node.get. See the API docs here:
         // https://github.com/ipfs/js-ipfs/tree/master/packages/interface-ipfs-core
-
+        
+        //upload file
         async function addFile () {
-            for await (const { cid } of node.add('Hello world!')) {
+            for await (const { cid } of node.add('Yessireeebob!')) {
                 console.log('successfully stored', cid)
                 cidhash=cid.toBaseEncodedString()
                 localStorage.setItem("file", cidhash)
@@ -30,7 +32,8 @@
         
         filename=localStorage.getItem("file")
         console.log("LocalStorage: " + filename)
-
+        
+        //return file
         async function catFile (filename) {
             for await (const data of node.cat(filename)) {
                 console.log(data.toString())
