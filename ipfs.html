@@ -40,15 +40,20 @@
             }
         }
         catFile(filename)
-        
-        const msg = new Ipfs({
-            EXPERIMENTAL: {
-                pubsub: true // required, enables pubsub
-            }
-        })
-        msg.once('ready', () => {
-            console.log("***PUBSUB READY***")
-        })
+
+window.ipfs = new Ipfs({
+  EXPERIMENTAL: {
+    pubsub: true
+  }
+});
+
+ipfs.once('ready', () => {
+  console.log('ipfs ready');
+  ipfs.pubsub.subscribe('test', (...args) => {
+    console.log('pubsub:', ...args);
+  });
+});
+
 })
     </script>
 </head>
