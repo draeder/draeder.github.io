@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const dbs = await window.indexedDB.databases()
       dbs.forEach(db => { window.indexedDB.deleteDatabase(db.name) })
     }
+    clearDB()
   })
 
   // You can write more code here to use it. Use methods like
