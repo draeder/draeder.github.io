@@ -41,21 +41,17 @@
         }
         catFile(filename)
 
-        const topic = 'fruit-of-the-day'
-        const receiveMsg = (msg) => console.log(msg.data.toString())
 
-        await Ipfs.pubsub.subscribe(topic, receiveMsg)
-        console.log(`subscribed to ${topic}`)
 
-        const ipfs = new IPFS({
-            EXPERIMENTAL: {
-                pubsub: true // required, enables pubsub
-            }
-        })
+    const ipfs = new IPFS({
+    EXPERIMENTAL: {
+        pubsub: true // required, enables pubsub
+    }
+    })
 
-        ipfs.once('ready', () => {
-            console.log("pubsub is ready")
-        })
+    ipfs.once('ready', () => {
+    // node is ready
+    })
 
     })
     </script>
