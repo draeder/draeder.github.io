@@ -64,7 +64,7 @@
   //Display default status message
   document.getElementById("status").innerHTML = "Waiting for peers. <div id='link'><a href=''"+window.location.href+"'>Share this link</a></div>";
 
-  //Check for stored room name
+  //Check for room name in URL
   if (roomname){
     document.getElementById("roomname").hidden = true;
     document.getElementById("profilename").innerText = "Your room: " + roomname;
