@@ -53,7 +53,7 @@
   <button type="button" onclick="upload()">Upload</button></body-->
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
-  localStorage["debug"] = "bugout,webtorrent"//extra debugging in the console
+  //localStorage["debug"] = "bugout,webtorrent" //extra debugging in the console
   //JS-IPFS variables
   //const nodeId = localStorage.getItem("ipfsID")
   //if(!nodeId ){
@@ -72,39 +72,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   //Bugout variables
   const url = window.location.href; 
   const urlObject = new URL(url);
-  const room = urlObject.searchParams.get('r')
-  var username=localStorage.getItem("name");
-  var roomname=room;
-  
+  const username=localStorage.getItem("name");
+  var roomname = urlObject.searchParams.get('r')
+
   //Hide username input if username is found in local storage
   if(username){
     document.getElementById("name").hidden = true;
   }
  
   //Display default status message
-  document.getElementById("status").innerHTML = "Waiting for peers. <div id='link'><a href=''"+window.location.href+"'>Share this link</a></div>";
+  document.getElementById("status").innerHTML = "Waiting for peers... <div id='link'><a href=''"+window.location.href+"'>Share this link</a></div>";
 
   //Check for room name in URL
   if (roomname){
+    var arrRoom = roomname.split("-"); 
     document.getElementById("roomname").hidden = true;
-    document.getElementById("profilename").innerText = "Your room: " + roomname;
-    bug(roomname);
-  } else {
+    document.getElementById("profilename").innerText = "Your room: " + arrRoom[0];
+    bugo(roomname);
+  } 
+  //Wait for room name
+  else {
     document.getElementById("link").hidden=true;
     document.getElementById("roomname").onkeydown = function(ev) {
       if (ev.keyCode == 13) {
-        if(!roomname){roomname=ev.target.textContent}
-        ev.preventDefault();
+        if(!roomname){
+          roomname=ev.target.textContent
+          var roomID = generateId();
+          var fullroomname = roomname+'-'+roomID
+          localStorage["roomname"]=roomname
+          localStorage["fullroomname"]=fullroomname      
+        }
         document.getElementById("roomname").hidden = true;
         document.getElementById("profilename").innerText = "Your room: " + roomname;
-        window.history.pushState("","","?r="+roomname);
+        window.history.pushState("","","?r="+fullroomname);
         document.getElementById("link").hidden=false;
-        bug(roomname)
+        ev.preventDefault();
+        bugo(fullroomname)
       }
     }
   }
 
-//Set room name
+//Set user name
   document.getElementById("name").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
@@ -138,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   //Create room and wait for connection to peers
-  function bug(roomname){
+  function bugo(roomname){
     b = Bugout(roomname)
     b.on("message", function(address, message) {
       var d = new Date();
