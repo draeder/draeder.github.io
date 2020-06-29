@@ -138,10 +138,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
-            posts: 'roomname, linkedPost, postID, date, time, username, message, messageID'
+            posts: 'roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
         });        
-        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID }).then (function(){ // Store messages
-            //return db.posts.get('Nicolas'); // Return messages
+        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID}).then (function(){ // Store messages
+          var fullmessage = db.posts.get('Nicolas'); // Return messages
+          async function addFile () {
+            for await (const { cid } of node.add(fullmessage)) {
+              console.log('successfully stored', cid)
+              cidhash=cid.toBaseEncodedString()
+              //localStorage.setItem("file", cidhash)
+              console.log(cidhash)
+              db.friends.update("roomname", {ipfs: cid}).then(function (updated) {
+                if (updated)
+                  console.log ("Updated Dexie with CID");
+                else
+                  console.log ("Nothing was updated ");
+              });              
+            }
+          }
+          addFile()
+
         })
 
         b.send(username + ": " + document.getElementById("input").value);
