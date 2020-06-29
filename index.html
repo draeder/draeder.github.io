@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const nodeId = localStorage.getItem("ipfsID")
   if(!nodeId ){
     const nodeId = 'ipfs-' + Math.random()
-    localStorage.setItem("ipfsID", nodeID)
+    localStorage.setItem("ipfsID", nodeId)
   }
   const node = await Ipfs.create({ repo: nodeId })
   console.log("Your node: " + nodeId)
