@@ -126,9 +126,9 @@ function bug(roomname){
     //Store messages locally
     var db = new Dexie("message-database");
     db.version(1).stores({
-        room: 'name,shoeSize'
+        posts: 'name,shoeSize'
     });
-    db.room.put({name: "Nicolas", shoeSize: 8}).then (function(){
+    db.posts.put({name: "Nicolas", shoeSize: 8}).then (function(){
         return db.room.get('Nicolas');
     }).then(function (friend) {
         alert ("Nicolas has shoe size " + room.shoeSize);
