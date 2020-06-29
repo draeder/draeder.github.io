@@ -232,8 +232,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     dbs.forEach(db => { 
       if(db.name !="message-database"){
         window.indexedDB.deleteDatabase(db.name)
-        console.log(db.name)
-        console.log("Cleared old IPFS IndexedDB data") 
       }
     })
   }
