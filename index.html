@@ -190,11 +190,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function clearDB () {
       const dbs = await window.indexedDB.databases()
       dbs.forEach(db => { 
-        window.indexedDB.deleteDatabase(db.name) 
-        console.log("Cleared IndexDB")
+        if(dbname !="messages-database"){
+          window.indexedDB.deleteDatabase(db.name)
+        }
+        console.log("Cleared old IPFS IndexedDB data")
       })
   }
   clearDB()
+
   // You can write more code here to use it. Use methods like
   // node.add, node.get. See the API docs here:
   // https://github.com/ipfs/js-ipfs/tree/master/packages/interface-ipfs-core
