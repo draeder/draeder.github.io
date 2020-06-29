@@ -188,13 +188,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 //clean up old ipfs data
   async function clearDB () {
-      const dbs = await window.indexedDB.databases()
-      dbs.forEach(db => { 
-        if(dbname !="messages-database - https://www.peer.ooo"){
-          window.indexedDB.deleteDatabase(db.name)//something for github
-        }
-        console.log("Cleared old IPFS IndexedDB data")
-      })
+    const dbs = await window.indexedDB.databases()
+    dbs.forEach(db => { 
+      if(dbname !="messages-database - https://www.peer.ooo"){
+        window.indexedDB.deleteDatabase(db.name)
+        console.log("Cleared old IPFS IndexedDB data")   
+      }
+    })
   }
   clearDB()
 
