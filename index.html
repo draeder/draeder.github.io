@@ -117,7 +117,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
       ev.preventDefault();
-      if(username){localStorage.setItem("name", username)}
+      if(username){
+        localStorage.setItem("name", username)
+        localStorage.setItem("userID", generateId(16))
+      }
       document.getElementById("name").hidden = true;
     }
   }
@@ -131,12 +134,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         var n = d.toLocaleTimeString();
         var msgID = generateId();
         var fullroomname = localStorage.getItem("fullroomname")
+        var userID = localStorage.getItem("userID")
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
             posts: 'roomname, linkedPost, postID, date, time, username, message, messageID'
         });        
-        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, message: msg, messageID: msgID }).then (function(){ // Store messages
+        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID }).then (function(){ // Store messages
             //return db.posts.get('Nicolas'); // Return messages
         })
 
