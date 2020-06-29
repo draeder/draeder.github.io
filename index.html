@@ -137,19 +137,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         var fullroomname = localStorage.getItem("fullroomname")
         var userID = localStorage.getItem("userID")      
         db.posts.put({
-          roomname: fullroomname, date: date, time: localTime, username: username, userID: userID, message: message, messageID: msgID})
-          .then(function (date){
-            return db.posts.get(date);
-          })
-          .then(function(post){
+          roomname: fullroomname, 
+          date: date, 
+          time: localTime, 
+          username: username, 
+          userID: userID, 
+          message: message, 
+          messageID: msgID
+        }).then(function (date){
+          return db.posts.get(date);
+        }).then(function(post){
             var toIpfs = JSON.stringify(post)
             var id = post.id
             console.log(toIpfs)
             addFile(toIpfs,id)
-          })
-          .catch(function(error){
-            console.log(error)
-          })
+        }).catch(function(error){
+          console.log(error)
+        })
         b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
@@ -198,7 +202,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (navigator.appVersion.indexOf("iOS")!=-1) OSName="iOS";
 
   if(OSName == "Android"){
-    document.getElementById("status").innerHTML = "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
+    document.getElementById("status").innerHTML = 
+    "<i class='fas fa-exclamation-triangle'></i> Sorry, " + OSName + " has limited/no functionality at this time."
   }
 
   //Remove scripts from messages
