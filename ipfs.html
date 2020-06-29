@@ -41,20 +41,7 @@
         }
         catFile(filename)
 
-        const msg = await Ipfs.create({ 
-            EXPERIMENTAL: {
-                pubsub: true
-            }
-         })
-        window.msg = msg
-        msg.once('ready', () => {
-        console.log('ipfs ready');
-        msg.pubsub.subscribe('test', (...args) => {
-            console.log('pubsub:', ...args);
-        });
-        });
-
-})
+    })
     </script>
 </head>
 <body>
