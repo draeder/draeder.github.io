@@ -111,6 +111,18 @@ function bug(roomname){
   b = Bugout(roomname)
   b.on("message", function(address, message) {
     log(message);
+  });
+  b.once("seen", function(address) {
+    if(!username){
+      log("[Anonymous joined]")
+      username = "Anonymous";
+    } else {b.send("["+username + " joined]")}
+    document.getElementById("status").innerText = "Connected";
+  });
+  b.heartbeat();
+}
+
+
     //Store messages locally
     var db = new Dexie("message-database");
     db.version(1).stores({
@@ -123,17 +135,6 @@ function bug(roomname){
     }).catch(function(error) {
       console.log("IndexedDB Error: " + error);
     });
-
-  });
-  b.once("seen", function(address) {
-    if(!username){
-      log("[Anonymous joined]")
-      username = "Anonymous";
-    } else {b.send("["+username + " joined]")}
-    document.getElementById("status").innerText = "Connected";
-  });
-  b.heartbeat();
-}
 
 //Check OS and warn Android users of limited/no functionality
 var OSName="Unknown OS";
