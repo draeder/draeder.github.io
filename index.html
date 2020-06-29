@@ -54,18 +54,12 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
   //localStorage["debug"] = "bugout,webtorrent" //extra debugging in the console
-  //JS-IPFS variables
-  //const nodeId = localStorage.getItem("ipfsID")
-  //if(!nodeId ){
-    const nodeId = 'ipfs-' + Math.random()
-  //  localStorage.setItem("ipfsID", nodeId)
-  //}
+  //IPFS variables
+  const nodeId = 'ipfs-' + Math.random()
   const node = await Ipfs.create({ repo: nodeId })
   console.log("Your node: " + nodeId)
   window.node = node
-
   const status = node.isOnline() ? 'online' : 'offline'
-
   console.log(`Node status: ${status}`)
   document.getElementById('status').innerHTML = `${status}`
 
@@ -78,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   //initiate Dexie
   var db = new Dexie("message-database");
   db.version(1).stores({
-          posts: 'roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
+    posts: '++id, roomname, linkedPost, postID, date, time, username, message, messageID, ipfs'
   }); 
 
   //Hide username input if username is found in local storage
@@ -135,19 +129,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById("input").onkeydown = function(ev) {
     if (ev.keyCode == 13) {
       if (b.lastwirecount) {
-        var msg = document.getElementById("input").value
-        var d = new Date();
-        var n = d.toLocaleTimeString();
+        var message = document.getElementById("input").value
+        var date = new Date();
+        var localTime = date.toLocaleTimeString();
         var msgID = generateId();
         var fullroomname = localStorage.getItem("fullroomname")
         var userID = localStorage.getItem("userID")      
-        db.posts.put({roomname: fullroomname, date: d, time: n, username: username, userID: userID, message: msg, messageID: msgID})
-        .then (function(){ // Store messages in ipfs
-          var fullFile = JSON.stringify(db.posts.get(msgID));
-          console.log(fullFile)
-          addFile(fullFile)
-        })
-
+        db.posts.put({
+          roomname: fullroomname, date: date, time: localTime, username: username, userID: userID, message: message, messageID: msgID})
+          .then(function (date){
+            return db.posts.get(date);
+          })
+          .then(function(post){
+            var toIpfs=JSON.stringify(post)
+            console.log(toIpfs)
+          })
+          .catch(function(error){
+            console.log(error)
+          })
         b.send(username + ": " + document.getElementById("input").value);
         document.getElementById("input").value = "";
       }
@@ -157,7 +156,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // store messages in ipfs
   async function addFile (fullFile) {
-    var fullmessage = "My cool file"
     console.log(fullFile)
     for await (const { cid } of node.add(fullFile)) {
       console.log('successfully stored', cid)
@@ -250,16 +248,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log(cidhash)
     }
   }
-  addFile()
+  addFile()*/
   
-  //return file
-  filename=localStorage.getItem("file")
-  async function catFile (filename) {
+  async function catFile () {
+    var filename=localStorage.getItem("lastIpfsCID")
     for await (const data of node.cat(filename)) {
       console.log(data.toString())
     }
   }
-  catFile(filename)*/
+  catFile()
 
 })
 </script>
