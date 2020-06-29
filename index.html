@@ -121,13 +121,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         var msg = document.getElementById("input").value
         var d = new Date();
         var n = d.toLocaleTimeString();
-        console.log(n)
         //Create IndexedDB database
         var db = new Dexie("message-database");
         db.version(1).stores({
-            posts: 'date, time, name, message, messageID'
+            posts: 'roomname, linkedPost, postID, date, time, username, message, messageID'
         });        
-        db.posts.put({date: d, time: n, name: username, message: msg }).then (function(){ // Store messages
+        db.posts.put({roomname: roomname, date: d, time: n, username: username, message: msg }).then (function(){ // Store messages
             //return db.posts.get('Nicolas'); // Return messages
         })
 
