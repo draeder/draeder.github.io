@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).then(function(post){
             var toIpfs = JSON.stringify(post)
             var id = post.id
-            console.log(toIpfs)
             addFile(toIpfs,id)
         }).catch(function(error){
           console.log(error)
@@ -167,12 +166,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Store messages in ipfs
   async function addFile(toIpfs, id) {
-    console.log(toIpfs)
-    console.log(id)
     for await (const { cid } of node.add(toIpfs)) {
-      console.log('successfully stored', cid)
       var cidHash=cid.toBaseEncodedString()
-      console.log(cidHash)
       localStorage.setItem("lastIpfsCID", cidHash)
       db.posts.update(id,{ipfs: cidHash})
     }
@@ -182,8 +177,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   function bugo(roomname){
     b = Bugout(roomname)
     b.on("message", function(address, message) {
-      var d = new Date();
-      var n = d.toLocaleTimeString();
       log(message);
     });
     b.once("seen", function(address) {
