@@ -10,15 +10,13 @@ At present, the service is completely experimental--researching, testing and pla
 - js-ipfs: decentralized data storage
 
 # Current Features
-- Chat in individual rooms
--- Shareable link (if hosted)
--- Otherwise joinable by room ID, which is the string after 'r=' in the URL
+- Chat in individual rooms.
 - Chat history is stored in plain text in LocalStorage and IndexedDB in the browser then sent to ipfs. All stored data will be encrypted soon.
 
 # Usage
 1. Launch index.html (no other files are needed)
 2. Create a room and username
-3. Share your link with friends if hosting index.html somewhere, otherwise send them the file and have them enter your room ID from the URL.
+3. Share the generated URL from the address bar with friends if you are hosting index.html somewhere, otherwise send them the file and have them enter your room ID from the URL (the string after 'r=').
 
 # Short-term Goals
 - Implement and test AvionDB for chat history
