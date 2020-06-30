@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const nodeId = 'ipfs-' + Math.random()
+        const node = await Ipfs.create({ repo: nodeId })
+        console.log("Your node: " + nodeId)
+        window.node = node
+        const status = node.isOnline() ? 'online' : 'offline'
+        console.log(`Node status: ${status}`)
+        async function addFile () {
+            for await (const { cid } of node.add('Some file content!')) {
+                console.log('successfully stored', cid)
+                cidhash=cid.toBaseEncodedString()
+                console.log(cidhash)
+            }
+        }
+    })
+</script>
+<body>
+</body>
+</html>
