@@ -19,6 +19,15 @@
             }
         }
         addFile()
+
+        const files = [{
+            path: '/my/beautiful/directory/awesomesauce.txt',
+            content: 'ABC'
+        }]
+
+        for await (const result of ipfs.add(content)) {
+            console.log(result)
+        }
     })
 </script>
 <body>
