@@ -24,8 +24,8 @@
             path: '/my/beautiful/directory/awesomesauce.txt',
             content: 'ABC'
         }]
-
-        for await (const result of ipfs.add(content)) {
+        
+        for await (const result of node.add(content)) {
             console.log(result)
         }
     })
