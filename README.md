@@ -36,7 +36,7 @@ At present, the service is completely experimental--researching, testing and pla
 - Live p2p video (1:1 & 1:many)
 - End-to-end encryption/security/privacy options
 - Identity system
-- Same data across all devices for the same user
+- Same data across all devices for the same user (https://simpleaswater.com/aviondb-p2p-sync/)
 - User search
 - Manage follower permissions / User blocking
 - Notifications
