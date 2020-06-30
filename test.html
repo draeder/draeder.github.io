@@ -11,25 +11,33 @@
         window.node = node
         const status = node.isOnline() ? 'online' : 'offline'
         console.log(`Node status: ${status}`)
-        async function addFile () {
-            for await (const { cid } of node.add('Some file content!')) {
-                console.log('successfully stored', cid)
-                cidhash=cid.toBaseEncodedString()
-                console.log(cidhash)
-            }
-        }
-        addFile()
 
-        const files = [{
-            path: '/my/beautiful/directory/awesomesauce.txt',
+        //create a variable with the directory path '/my/beautiful/directory' 
+        // and a file 'awesomesause.txt' with the content 'ABC' 
+        var files = [{
+            path: '/my/beautiful/directory/firstfile.txt',
             content: 'ABC'
         }]
+
+        addFile(files) //add the first file       
+
+        //add another file to the directory path '/mybeautiful/directory' in ipfs
+        files = [{
+            path: '/my/beautiful/directory/secondfile.txt',
+            content: 'DEF'
+        }]
         
-        for await (const result of node.add(files)) {
-            console.log(result)
+        addFile(files) //add the sectond file
+
+        //function to add the files
+        async function addFile (files) {
+            for await (const result of node.add(files)) {
+                console.log(result)
+            }
         }
     })
 </script>
 <body>
 </body>
 </html>
+
