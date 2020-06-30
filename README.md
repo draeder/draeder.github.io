@@ -6,6 +6,6 @@ The service can run directly in a browser tab without any need for server hostin
 At present, the service is completely experimental--testing and playing around with various decentralized APIs like the follwing:
 
 - Bugout API (pre-alpha): A decentralized messenging API that connects peers together and is built upon WebTorrent and WebRTC.
-- AvionDB (pre-alpha): an offline first, mongo-like, security conscious decentralized database built upon OrbitDB and IPFS
+- AvionDB (alpha): an offline first, mongo-like, security conscious decentralized database built upon OrbitDB and IPFS
 - js-ipfs: storage for images and videos (may be replaced with AvionDB)
 
