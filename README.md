@@ -13,7 +13,7 @@ At present, the service is completely experimental--researching, testing and pla
 - Chat in individual rooms
 -- Shareable link (if hosted)
 -- Otherwise joinable by room ID, which is the string after 'r=' in the URL
-- Chat history is stored in plain text in LocalStorage and IndexedDB in the browser then sent to ipfs. All storage will be encrypted soon.
+- Chat history is stored in plain text in LocalStorage and IndexedDB in the browser then sent to ipfs. All stored data will be encrypted soon.
 
 # Usage
 1. Launch index.html (no other files are needed)
