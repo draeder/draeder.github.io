@@ -1,4 +1,4 @@
-# draeder.github.io
+# Simple P2P Social Network
 An experimental effort to build a servless, secure and fully decentralized peer-to-peer social network.
 
 The service can run directly in a browser tab without any need for server hosting by simply downloading index.html and opening it in a browser.
