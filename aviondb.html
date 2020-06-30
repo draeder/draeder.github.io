@@ -7,11 +7,7 @@
 
 <script type="text/javascript">
 const runExample = async () => {
-  const ipfs = await window.Ipfs.create(function(result){
-      return result;
-  }).then(
-     console.log(result) 
-  )
+  const ipfs = await window.Ipfs.create();
     
   // Creates a db named "DatabaseName"
   const aviondb = await AvionDB.init("DatabaseName", ipfs); 
@@ -63,7 +59,7 @@ const runExample = async () => {
 
     
   await collection.close(); // Collection will be closed.
-  await aviondb.drop(); // Drops the database 
+  await aviondb.drop('/orbitdb/zdpuAutdT6Zoik9GAa9dsMxvQeiaayPdRp1p81bdm1LmYZ8ba/employees'); // Drops the database 
   await aviondb.close(); // Closes all collections and binding database.
   await ipfs.stop();
 };
