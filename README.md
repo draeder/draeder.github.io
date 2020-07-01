@@ -53,3 +53,4 @@ At present, the service is completely experimental (expect things to be broken!)
 - Notifications
 - An API --If I learn enough
 - Eat better food
+- Clean up Readme
