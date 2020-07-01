@@ -36,6 +36,7 @@ At present, the service is completely experimental (expect things to be broken!)
 - Image storage and retrieval
 - Avatars
 - Export/delete historic data
+- Eat spaghetti
 
 # Long-term Goals
 - Eternally open source
