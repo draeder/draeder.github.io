@@ -19,8 +19,9 @@ At present, the service is completely experimental--researching, testing and pla
 - Connections to peers don't happen right away, and sometimes not at all--especially using the Chrome Browser on Android (thus the warning), but other browsers on Android seem to work okay
 - Established sessions may "time out"
 - Chat history is not sent to new joiners, yet
-- The UI is confusing
 - Chat history is stored in ipfs as plain text
+- The UI is confusing
+- Spaghetti code
 
 # Usage
 1. Launch index.html (no other files are needed; ignore them unless you want broken code)
