@@ -17,7 +17,7 @@ At present, the service is completely experimental--researching, testing and pla
 ## Lots
 - I'm using GitHub Pages as my test environment LOL
 - Connections to peers don't happen right away, and sometimes not at all--especially using the Chrome Browser on Android (thus the warning), but other browsers on Android seem to work okay
-- Established sessions may "time out"
+- Established sessions may "time out"--probably due to how the device manages memory/cpu/network connectivity
 - Chat history is not sent to new joiners, yet
 - Chat history is stored in ipfs as plain text
 - The UI is confusing
