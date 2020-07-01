@@ -1,20 +1,49 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    //Bugout initialization
+    document.getElementsByClassName("profileID", async () => {
+        this.onkeydown("ev", function () {
+            if (ev.keyCode == 13) {
+                //set typing flag to true
+                //*add code*
+                var roomname = ev.target.textContent;
+            }
+        })
+        return profileID;
+    }).then(function(){
+        b = Bugout(profileID)
+        console.log(profileID)
+    }) 
+    
+    //AvionDb initialization variables
+
+    //Get ipfs node ID
+
     //UI Handler
     ////Styles/CSS
     ////Elements
     ////
-
+  
+    document.getElementsByClassName("reply", async () => {
+        this.onkeydown("ev", function () {
+            if (ev.keyCode == 13) {
+                //set typing flag to true
+                //*add code*
+            }
+        })
+    })
+    document.getElementById("name").onkeydown = function(ev) {
+    if (ev.keyCode == 13) {
     //User Profile Handler
     ////Create Self
     ////Edit Self
     ////Sync Self to other devices
-    ////View Self/Anyone
+    ////View Self/Anyone by Profile ID
 
     //Publish Handler
     ////Publish New Content
     //////Reply to Existing Content
-    ////Edit Existing Content
-    //////Delete Existing Content
+    ////Edit Existing *own* Content
+    //////Delete Existing *own* Content
 
     //Subscribe Handler
     ////Subscribe to Anyone
