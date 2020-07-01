@@ -4,17 +4,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     ////Elements
     ////
 
-    //User Account Handler
-    ////Create
-    ////View
-    ////Edit
+    //User Profile Handler
+    ////Create Self
+    ////Edit Self
+    ////Sync Self to other devices
+    ////View Self/Anyone
 
-    //Subscribe-to Handler
-    ////Follow
-    ////Un-follow
+    //Publish Handler
+    ////Publish New Content
+    //////Reply to Existing Content
+    ////Edit Existing Content
+    //////Delete Existing Content
+
+    //Subscribe Handler
+    ////Subscribe to Anyone
+    ////Unsubscribe from Anyone
+    ////Manage Subscribers (Block)
     
     //Feed Handler
-    ////Self/Anyone's Profile
-    ////Followed Feed
+    ////View Self/Anyone's Feed
+    ////View Subscribed Feeds
 
 })
