@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (ev.keyCode == 13) {
                 //set typing flag to true
                 //*add code*
-                var roomname = ev.target.textContent;
+                const profileID = ev.target.textContent;
+                console.log(profileID)
             }
         })
-        return profileID;
     })
 
     const asyncExample = () => {
