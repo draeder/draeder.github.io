@@ -7,6 +7,14 @@
 
 <script type="text/javascript">
 const runExample = async () => {
+  //clean up old indexeddb data
+    const dbs = await window.indexedDB.databases()
+    dbs.forEach(db => { 
+        if(db.name !="message-database"){
+        window.indexedDB.deleteDatabase(db.name)
+        }
+    })
+
   const ipfs = await window.Ipfs.create();
     
   // Creates a db named "DatabaseName"
