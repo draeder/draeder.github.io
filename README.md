@@ -52,3 +52,4 @@ At present, the service is completely experimental (expect things to be broken!)
 - Manage follower permissions / User blocking
 - Notifications
 - An API --If I learn enough
+- Eat better food
