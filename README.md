@@ -13,8 +13,17 @@ At present, the service is completely experimental--researching, testing and pla
 - Chat in individual rooms.
 - Chat history is stored in plain text in LocalStorage and IndexedDB in the browser then sent to ipfs. All stored data will be encrypted soon.
 
+# Current Limitations
+## Lots
+- I'm using GitHub Pages as my test environment LOL
+- Connections to peers don't happen right away, and sometimes not at all--especially using the Chrome Browser on Android (thus the warning), but other browsers on Android seem to work okay
+- Established sessions may "time out"
+- Chat history is not sent to new joiners, yet
+- The UI is confusing
+- Chat history is stored in ipfs as plain text
+
 # Usage
-1. Launch index.html (no other files are needed)
+1. Launch index.html (no other files are needed; ignore them unless you want broken code)
 2. Create a room and username
 3. Share the generated URL from the address bar with friends if you are hosting index.html somewhere, otherwise send them the file and have them enter your room ID from the URL (the string after 'r=').
 
@@ -40,3 +49,4 @@ At present, the service is completely experimental--researching, testing and pla
 - User search
 - Manage follower permissions / User blocking
 - Notifications
+- An API --If I learn enough
