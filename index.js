@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', async () => {
     //Bugout initialization
-    document.getElementsByClassName("profileID", function(ev) {
+    document.getElementsByClassName("profileID").onkeydown = function(ev) {
         if (ev.keyCode == 13) {
             //set typing flag to true
             //*add code*
             const profileID = ev.target.textContent;
             console.log(profileID)
         }
-    })
+    }
 
     const asyncExample = () => {
         const mycrap = "crapola"
