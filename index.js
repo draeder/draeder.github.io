@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
     //UI Handler
-    
+    ////Styles/CSS
+    ////Elements
+    ////
+
     //User Account Handler
     ////Create
     ////View
@@ -11,8 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ////Un-follow
     
     //Feed Handler
-    ////Self Profile
-    ////Followed Profile
-    ////Anyone's Profile
+    ////Self/Anyone's Profile
+    ////Followed Feed
 
 })
