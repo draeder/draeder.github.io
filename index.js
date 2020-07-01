@@ -9,10 +9,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         })
         return profileID;
-    }).then(function(){
-        b = Bugout(profileID)
-        console.log(profileID)
-    }) 
+    })
+
+    const asyncExample = () => {
+        const mycrap = "crapola"
+        return crapola
+      }
+      
+    const users = await asyncExample()
+    
+    console.log(asyncExample())  
     
     //AvionDb initialization variables
 
