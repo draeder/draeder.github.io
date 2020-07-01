@@ -31,8 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         })
     })
-    document.getElementById("name").onkeydown = function(ev) {
-    if (ev.keyCode == 13) {
+
     //User Profile Handler
     ////Create Self
     ////Edit Self
