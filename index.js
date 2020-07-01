@@ -24,5 +24,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     //Feed Handler
     ////View Self/Anyone's Feed
     ////View Subscribed Feeds
-
 })
