@@ -25,7 +25,7 @@ At present, the service is completely experimental--researching, testing and pla
 
 # Usage
 1. Launch index.html (no other files are needed; ignore them unless you want broken code)
-2. Create a room and username
+2. Create a room and username (don't forget to hit enter in each field)
 3. Share the generated URL from the address bar with friends if you are hosting index.html somewhere, otherwise send them the file and have them enter your room ID from the URL (the string after 'r=').
 
 # Short-term Goals
