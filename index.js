@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     //Bugout initialization
-    document.getElementsByClassName("profileID", async () => {
+    document.getElementsByClassName("profileID", function(ev) {
         this.onkeydown("ev", function () {
             if (ev.keyCode == 13) {
                 //set typing flag to true
