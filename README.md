@@ -3,7 +3,7 @@ An experimental effort to build a simple serverless, secure and fully decentrali
 
 The service can run directly in a browser tab without any need for server hosting by simply downloading index.html and opening it in a browser.
 
-At present, the service is completely experimental--researching, testing and playing around with various decentralized APIs like the follwing (expect things to be broken!):
+At present, the service is completely experimental (expect things to be broken!)--researching, testing and playing around with various decentralized APIs like the follwing:
 
 - Bugout API (pre-alpha): A decentralized messenging API that connects peers together and is built upon WebTorrent and WebRTC.
 - AvionDB (alpha): an offline first, mongo-like, security conscious decentralized database built upon OrbitDB and IPFS
