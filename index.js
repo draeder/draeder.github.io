@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const asyncExample = () => {
         const mycrap = "crapola"
-        return crapola
+        return mycrap
       }
       
     const users = await asyncExample()
