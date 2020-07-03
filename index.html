@@ -113,7 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //Wait for and set user name
   document.getElementById("name").onkeydown = function(ev) {
-    console.log("Typing...")
     if (ev.keyCode == 13) {
       username=ev.target.textContent;
       ev.preventDefault();
