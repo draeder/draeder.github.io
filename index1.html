@@ -3,23 +3,22 @@
 <head>
     <script src="https://chr15m.github.io/bugout/bugout.min.js" 
     integrity="sha384-wp4EShIOwQyaJreUc1RAWQrSvOHeLb5fcXYwYdL5Lbj++G7B0touaxiqqj5DKQaY" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <script src="https://unpkg.com/aviondb/dist/aviondb.min.js"></script>
     <script src='index1.js'></script>
 </head>
 <body>
     <bugout-status>Waiting for peers...</bugout-status><br>
     <aviondb-status>Waiting for database...</aviondb-status><p>
+    Name: <br>
     <input id="name" class="name"></input><p>
+    Post: <br>
     <input id="post" class="post"></input><p>
+    Reply: <br>
     <input id="reply" class="reply"></input><p>
-    <feed>
-        <posts>
-            <post>
-                <replies>
-                    <reply></reply>
-                </replies>
-            </post>
-        </posts>
-    </feed>
+    <feed></feed>
+    <post></post>
+    <reply></reply>
 </body>
 <script>
 </script>

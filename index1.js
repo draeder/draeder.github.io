@@ -1,12 +1,12 @@
-//-->Wait for user name (profile)
-    //--> Create the AvionDB database
-    //--> Start the bugout session
-        //--> Wait for peers
-            //--> send/recieve messages
-            //--> log sent/recieved messages in database
+//--> Init AvionDB
+    //--> Check for profile data
+        //(data)--> Get name
+            //--> Init bugout server
+        //(!data)--> Enter data & update DB
+            //--> Init bugout server
+                //--> process messages
 
-document.addEventListener('DOMContentLoaded', async () => {
-
+/*///
     //Watch for keyup in any input field
     const inputs = document.getElementsByTagName("input")
     for (let input of inputs){
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     //Start a Bugout session
     let b; //global bugout variable
     let roomname; //global bugout roomname
+    let ready; //global bugout ready variable
 
     function bugout(e){
         switch(e.id) {
@@ -52,28 +53,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(b){
             b.on("seen", function(){
                 ready = true;
-                document.getElementsByTagName("status")[0].textContent="Peers connected!"
+                document.getElementsByTagName("bugout-status")[0].innerHTML="Peers connected!"
                 console.log("Bugout: Ready...")
+                b.on("message", function(address, message){
+                    document.getElementsByTagName("post").innerHTML=message
+                })
             })
         }
 
         //Send outgoing messages
         function post(){
-            if(ready=true){
-                console.log("we're ready")
-                document.getElementsByTagName("feed")[0].textContent="Ready"
+            document.getElementsByTagName("post")[0].innerHTML=e.value
+            if(ready==true){
+                b.send(
+                    e.value
+                )
             }
             console.log(roomname + " Send post with value: " + e.value)
-            var parent = document.createElement("div");
-            parent.append("Some text");
-            parent.prepend("Headline: ");
-            
-            console.log(parent.textContent); // "Headline: Some text"
         }
+
+        //Send outgoing reply
         function reply(){
+            document.getElementsByTagName("reply")[0].innerHTML=e.value
+            if(ready==true){
+                b.send(
+                    e.value
+                )
+            }            
             console.log(roomname + " Send reply with value: " + e.value)
         }
-    }
+        
+        //Handle incoming message
+    }  
 
     //Create AvionDB database
     function avion(){
@@ -89,4 +100,64 @@ document.addEventListener('DOMContentLoaded', async () => {
     function dec2hex (dec) {
         return ('0' + dec.toString(16)).substr(-2)
     }  
-})
+
+///*/
+const runExample = async () => {
+    const ipfs = await window.Ipfs.create();
+      
+    // Creates a db named "DatabaseName"
+    const aviondb = await AvionDB.init("DatabaseName", ipfs); 
+    
+    // Creates a Collection named "employees"
+    const collection = await aviondb.initCollection("employees");
+   
+    // Returns the List of collection names
+    await aviondb.listCollections() 
+    // prints ['employees'] 
+   
+    // Adding an employee document
+    await collection.insertOne({
+      hourly_pay: "$15",
+      name: "Elon",
+      ssn: "562-48-5384",
+      weekly_hours: 100,
+    });
+   
+    // We also support multi-insert using collection.insert()
+    // See https://github.com/dappkit/aviondb/blob/master/API.md
+      
+      
+    // Search by a single field Or many!
+    var employee = await collection.findOne({
+      ssn: "562-48-5384", 
+    });
+   
+    // We also support find(), findById()
+    // See https://github.com/dappkit/aviondb/blob/master/API.md
+      
+    // Returns the matching document
+    console.log(employee); 
+    // Prints the above added JSON document
+      
+      
+    // Update a document
+    var updatedEmployee = await collection.update(
+     { ssn: "562-48-5384" },
+     { $set: { hourly_pay: '$100' } }
+    );
+      
+    // We also support updateMany(), findOneAndUpdate()
+    // See https://github.com/dappkit/aviondb/blob/master/API.md
+  
+    // Returns the updated document
+    console.log(updatedEmployee); 
+    // Prints the updated JSON document
+  
+      
+    await collection.close(); // Collection will be closed.
+    await aviondb.drop(); // Drops the database 
+    await aviondb.close(); // Closes all collections and binding database.
+    await ipfs.stop();
+  };
+      
+runExample()
