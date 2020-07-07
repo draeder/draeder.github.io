@@ -2,23 +2,43 @@
 <html>
 <head>
     <script src="https://chr15m.github.io/bugout/bugout.min.js" 
-    integrity="sha384-wp4EShIOwQyaJreUc1RAWQrSvOHeLb5fcXYwYdL5Lbj++G7B0touaxiqqj5DKQaY" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
-    <script src="https://unpkg.com/aviondb/dist/aviondb.min.js"></script>
-    <script src='index1.js'></script>
+        integrity="sha384-wp4EShIOwQyaJreUc1RAWQrSvOHeLb5fcXYwYdL5Lbj++G7B0touaxiqqj5DKQaY" 
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js">
+    </script>
+    <script src="https://unpkg.com/aviondb/dist/aviondb.min.js">
+    </script>
+    <script src='index2.js'>
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" 
+        integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" 
+        crossorigin="anonymous">
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
-    <bugout-status>Waiting for peers...</bugout-status><br>
+    <bugout-status><i class="fa fa-ban fa-lg" aria-hidden="true" style="color: orange"></i> Waiting for peers...</bugout-status><br>
     <aviondb-status>Waiting for database...</aviondb-status><p>
     Name: <br>
-    <input id="name" class="name"></input><p>
+    <input id="name-input"></input><p>
     Post: <br>
-    <input id="post" class="post"></input><p>
+    <input id="post-input"></input><p>
     Reply: <br>
-    <input id="reply" class="reply"></input><p>
-    <feed></feed>
-    <post></post>
-    <reply></reply>
+    <input id="reply-input"></input><p>
+    <feed id="feed">
+        ..Feed..
+        <br>
+        <post id="post">
+            Posts..
+        </post>
+        <br>
+        <response id="response">
+            ..Replies
+        </response>
+    </feed>
 </body>
 <script>
 </script>
