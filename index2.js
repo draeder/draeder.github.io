@@ -2,15 +2,12 @@
 // Simple P2P Social Network //
 ///////////////////////////////
 //
-// -> Create a Bugout server with identifier = "peer id"
-//  -> Update the URL with "peer id"
-// -> wait for updates to profile
-//  -> craft updated url with "username"+"peer id"
 //
 
+//// Run everything asynchronously after DOM load
 document.addEventListener('DOMContentLoaded', async () => {
 
-////// Generate peer ID and store it in LocalStorage
+//// Generate peer ID and store it in LocalStorage
     let identifier = localStorage.getItem("Peer ID")
     if(!identifier){
         let identifier = generateId() 
@@ -20,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("There was an id: " + identifier)
     }
 
-////// Process URL from the address bar
+//// Process URL from the address bar
     const url = window.location.href; 
     let urlObject = new URL(url);
     let profileId = urlObject.searchParams.get('r')
@@ -28,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let serverName = arrUrl[0]
     let serverId = arrUrl[1] // connect to existing instance
 
-////// Initialize a Bugout session
+//// Initialize a Bugout session
     let b = new Bugout(serverId)
     b.on("seen", function(address){
         console.log("Server identifier: " + b.identifier)
@@ -37,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("Seen: " + address)
     })
 
-////// Handle incoming messages
+//// Handle incoming messages
     // Recieve inbound message from Bugout
     b.on("message", function(address, msg){
         //let message = JSON.stringify(msg)
@@ -60,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-////// Handle inputs from DOM
+//// Handle inputs from DOM
     // Get value from *any* input field upon carriage return
     const inputTags = document.getElementsByTagName("input")
     console.log(inputTags)
@@ -103,20 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-/*///// Get user input and handle asynchronously
-    //example reference: https://stackoverflow.com/questions/52864065/can-i-pass-an-async-function-as-a-callback-to-an-async-function
-    const setStateAsync = (newState) => {
-        return new Promise((resolve) => {
-            setState(newState, resolve);
-        })
-    }
-    async function componentDidMount() {
-        await setStateAsync(newState);
-        await doStuff();
-    }
-
-*/ 
-////// Create message objects
+//// Create message objects
     // Create a user profile object
     function Profile(type, identifier, first, last, email, about, avatar) {
         this.type = type
@@ -156,5 +140,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     function dec2hex (dec) {
         return ('0' + dec.toString(16)).substr(-2)
-    } 
+    }
+
+/*///// Example async callback
+    //example reference: https://stackoverflow.com/questions/52864065/can-i-pass-an-async-function-as-a-callback-to-an-async-function
+    const setStateAsync = (newState) => {
+        return new Promise((resolve) => {
+            setState(newState, resolve);
+        })
+    }
+    async function componentDidMount() {
+        await setStateAsync(newState);
+        await doStuff();
+    }
+
+*/ 
 })
