@@ -38,13 +38,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 
 ////// Handle incoming messages
+    // Recieve inbound message from Bugout
     b.on("message", function(address, msg){
         //let message = JSON.stringify(msg)
         processMsg(msg)
         console.log(address)
     })
 
-////// Process message types
+    // Process message types
     function processMsg(message){
         if(message.type == "profile"){
             console.log("Recieved an incoming message object of type 'profile'")
@@ -59,7 +60,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-////// Get value from any input field upon carriage return
+////// Handle inputs from DOM
+    // Get value from *any* input field upon carriage return
     const inputTags = document.getElementsByTagName("input")
     console.log(inputTags)
 
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-////// Handle input field type
+    // Handle input field type
     function processInput (input){
         let message = {}
         let profile = {}
@@ -114,7 +116,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 */ 
-    //create a user profile object
+////// Create message objects
+    // Create a user profile object
     function Profile(type, identifier, first, last, email, about, avatar) {
         this.type = type
         this.identifier = identifier
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         this.name = function() {return this.firstName + " " + this.lastName}
     }
 
-    //create a post object
+    // Create a post object
     function Post(type, identifier, postId, date, message) {
         this.type = type
         this.identifier=identifier
@@ -135,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         this.message = message
     }
 
-    //create a reply object
+    // Create a reply object
     function Reply(type, identifier, postId, replyId, date, message) {
         this.type = type,
         this.identifier = identifier
@@ -145,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         this.message = message
     }
 
-    //Generate crypto ID hash
+    // Generate crypto ID hash
     function generateId (len) {
         var arr = new Uint8Array((len || 40) / 2)
         window.crypto.getRandomValues(arr)
