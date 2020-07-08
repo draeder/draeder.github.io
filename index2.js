@@ -1,8 +1,7 @@
 ///////////////////////////////
 // Simple P2P Social Network //
 ///////////////////////////////
-//
-//
+
 
 //// Run everything asynchronously after DOM load
 document.addEventListener('DOMContentLoaded', async () => {
