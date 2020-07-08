@@ -74,13 +74,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    //Process clicked away or tabbed out
+    //Process 'clicked away' or 'tabbed out'
     for (let onBlur of inputTags){
         onBlur.addEventListener('blur', getInputTabOut)
     }
 
     function getInputTabOut (e) {
-        console.log("Tabbed out...!")
+        console.log("Tabbed or clicked out... " + this.id)
+        if(e.value){
+            console.log(e.id + " has a value")
+        } else
+        {
+            console.log(e.id + " has no value")
+        }
     }
 
     // Handle input field type
