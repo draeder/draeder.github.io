@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         this.message = message
     }
 
-    // Generate crypto ID hash
+//// Generate crypto ID hash
     function generateId (len) {
         var arr = new Uint8Array((len || 40) / 2)
         window.crypto.getRandomValues(arr)
