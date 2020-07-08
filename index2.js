@@ -57,12 +57,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 //// Handle inputs from DOM
-    // Get value from *any* input field upon carriage return
+    // Get value from *any* input field upon value change
     const inputTags = document.getElementsByTagName("input")
     console.log(inputTags)
 
+    //Process carriage return
     for (let keyPress of inputTags){
-        keyPress.addEventListener('keyup',getInput)
+        keyPress.addEventListener('keyup', getInput)
     }
 
     function getInput (e) {
@@ -71,6 +72,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.preventDefault();
             processInput(this)
         }
+    }
+
+    //Process clicked away or tabbed out
+    for (let onBlur of inputTags){
+        onBlur.addEventListener('blur', getInputTabOut)
+    }
+
+    function getInputTabOut (e) {
+        console.log("Tabbed out...!")
     }
 
     // Handle input field type
