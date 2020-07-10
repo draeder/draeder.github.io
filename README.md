@@ -43,7 +43,7 @@ At present, the service is completely experimental (expect things to be broken!)
 - Ownership of user data always belongs to the user 100%
 - Improve the UI
 - Streaming video file playback
-- Live p2p video (1:1 & 1:many)
+- Live p2p video (1:1, Multi-party conference, 1:many) (https://www.npmjs.com/package/simple-peer)
 - End-to-end encryption/security/privacy options
 - Identity system
 - Same data across all devices for the same user (https://simpleaswater.com/aviondb-p2p-sync/)
