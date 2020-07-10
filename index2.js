@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(!identifier){
         let identifier = generateId() 
         localStorage.setItem("Peer ID", identifier)
-        console.log("There was no id, so set one: " + identifier)
+        //console.log("There was no id, so set one: " + identifier)
     } else {
-        console.log("There was an id: " + identifier)
+        //console.log("There was an id: " + identifier)
     }
 
 //// Process URL from the address bar
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("Server identifier: " + b.identifier)
         document.getElementsByTagName("bugout-status")[0].innerHTML=
             "<i class='fa fa-exchange fa-lg' aria-hidden='true' style='color: green'></i> Peers connected!"
-        console.log("Seen: " + address)
+        //console.log("Seen: " + address)
     })
 
 //// Handle incoming messages
@@ -38,34 +38,84 @@ document.addEventListener('DOMContentLoaded', async () => {
     b.on("message", function(address, msg){
         //let message = JSON.stringify(msg)
         processMsg(msg)
-        console.log(address)
+        //console.log(address)
     })
 
     // Process message types
     function processMsg(message){
         if(message.type == "profile"){
-            console.log("Recieved an incoming message object of type 'profile'")
+            //console.log("Recieved an incoming message object of type 'profile'")
         }
         if(message.type == "post"){
-            console.log("recieved an incoming post")
-            document.getElementById("post").innerHTML=message.message //message.date, message.type, etc.
+            addPost(message)
         }
         if(message.type == "reply"){
-            console.log("recieved an incoming reply")
-            document.getElementById("response").innerHTML=message.message //msg.date, msg.type, etc.
+            addReply(message)
         }
     }
+
+    // Add received posts to DOM
+    function addPost (post) { 
+        var feed = document.getElementById('feed'),
+        article = document.createElement('article'),
+        d = document.createElement("div"),
+        inp = document.createElement("input"),
+        spacer = document.createElement("br")
+
+        inp.name = post.postId
+        article.setAttribute('class', 'article')
+        article.innerHTML = post.message
+
+        feed.insertBefore(article, feed.firstChild)
+        .setAttribute("id", post.postId)
+
+        document.getElementById(article.id)
+        .appendChild(d)
+        .appendChild(inp)
+        .setAttribute("id", "reply-input")
+
+        //feed.append(spacer, article.nextSibling)
+        article.after(spacer)
+        getInputTags() //update input tags
+    }
+    
+    // Add receivced replies to DOM
+    function addReply (reply) { 
+        console.log(reply.postId)
+        var replies = document.getElementById(reply.postId),
+        comment = document.createElement("blockquote")
+        d = document.createElement("div")
+        comment.setAttribute("class", "blockquote")
+        comment.innerText = reply.message 
+
+        replies.appendChild(comment, replies)
+        .setAttribute("id", reply.replyId)
+    }
+    
+    class Posts extends HTMLElement {
+        connectedCallback() {
+          //this.innerHTML = `<h1>Hello, World!</h1>`;
+        }
+      }
+      
+    customElements.define('message-post', Posts);
 
 //// Handle inputs from DOM
     // Get value from *any* input field upon value change
-    const inputTags = document.getElementsByTagName("input")
-    console.log(inputTags)
-
-    //Process carriage return
-    for (let keyPress of inputTags){
-        keyPress.addEventListener('keyup', getInput)
+    function getInputTags(){
+        var inputTags = document.getElementsByTagName("input")
+        //console.log(inputTags)
+    
+        //Process carriage return
+        for (let keyPress of inputTags){
+            keyPress.addEventListener('keyup', getInput)
+        }
+        //Process 'clicked away' or 'tabbed out'
+        for (let onBlur of inputTags){
+            onBlur.addEventListener('blur', getInputTabOut)
+        }
     }
-
+    getInputTags()
     function getInput (e) {
         //console.log("Typing...")
         if (e.keyCode == 13) {
@@ -74,18 +124,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    //Process 'clicked away' or 'tabbed out'
-    for (let onBlur of inputTags){
-        onBlur.addEventListener('blur', getInputTabOut)
-    }
-
     function getInputTabOut (e) {
         console.log("Tabbed or clicked out... " + this.id)
         if(e.value){
-            console.log(e.id + " has a value")
+            //console.log(e.id + " has a value")
         } else
         {
-            console.log(e.id + " has no value")
+            //console.log(e.id + " has no value")
         }
     }
 
@@ -102,11 +147,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             //create a post message
             console.log("post-input")
             message = new Post("post", identifier, generateId(), Date.now(), input.value)
+            input.value = ""
         } else 
         if(input.id=="reply-input"){
             console.log("reply-input")
             //create a reply message
-            message = new Reply("reply", identifier, "", generateId(), Date.now(), input.value)
+            var postId=input.name
+            message = new Reply("reply", identifier, postId, generateId(), Date.now(), input.value)
+            input.value = ""
         } else {
             console.log("Warning: Input field <input id='" + input.id + "'> is not defined in the function named 'processInput'.")
         }
@@ -157,17 +205,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         return ('0' + dec.toString(16)).substr(-2)
     }
 
-/*///// Example async callback
-    //example reference: https://stackoverflow.com/questions/52864065/can-i-pass-an-async-function-as-a-callback-to-an-async-function
-    const setStateAsync = (newState) => {
-        return new Promise((resolve) => {
-            setState(newState, resolve);
-        })
-    }
-    async function componentDidMount() {
-        await setStateAsync(newState);
-        await doStuff();
-    }
-
-*/ 
 })

@@ -19,6 +19,27 @@
         crossorigin="anonymous">
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body{
+       background-color: #00091a; 
+       color: white;
+       padding: 15px;
+    }
+    .article{
+        background-color:#001a33;
+        padding: 10px;
+        border: 1px solid #003566;
+        color:white;
+    }
+    .blockquote{
+        background-color:#193366;
+        padding: 10px;
+        color: white;
+    }
+    input:focus, textarea:focus, select:focus{
+        outline: none;
+    }
+</style>
 <body>
     <bugout-status><i class="fa fa-ban fa-lg" aria-hidden="true" style="color: orange"></i> Waiting for peers...</bugout-status><br>
     <aviondb-status>Waiting for database...</aviondb-status><p>
@@ -26,19 +47,10 @@
     <input id="name-input"></input><p>
     Post: <br>
     <input id="post-input"></input><p>
-    Reply: <br>
-    <input id="reply-input"></input><p>
-    <feed id="feed">
-        ..Feed..
-        <br>
-        <post id="post">
-            Posts..
-        </post>
-        <br>
-        <response id="response">
-            ..Replies
-        </response>
-    </feed>
+
+    <main id="feed">
+    </main>
+
 </body>
 <script>
 </script>
