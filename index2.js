@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         spacer = document.createElement("br")
 
         inp.name = post.postId
+        inp.setAttribute("placeholder","Comment . . .")
         article.setAttribute('class', 'article')
         article.innerHTML = post.message + "<p>"
 
@@ -126,11 +127,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function getInputTabOut (e) {
         console.log("Tabbed or clicked out... " + this.id)
-        if(e.value){
-            //console.log(e.id + " has a value")
+        console.log(this.value)
+        if(this.value){
+            console.log(this.id + " has a value")
+            e.preventDefault()
+            processInput (this)
         } else
         {
-            //console.log(e.id + " has no value")
+            console.log(this.id + " has no value")
+            console.log(this)
         }
     }
 

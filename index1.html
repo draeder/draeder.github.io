@@ -23,17 +23,21 @@
     body{
        background-color: #070b12; 
        color: white;
-       padding: 15px;
+       padding: 20px;
+       padding-right: 20px;
     }
+
     article{
         background-color:#0f192b;
         padding: 10px;
-        border: 1px solid #003566;
+        border: 1px solid #1b2d4b;
         color:white;
+        padding-right:20px;
     }
     blockquote {
         background: #142138;
         padding: 10px;
+        Word-Break: break-all;
     }
     blockquote:before {
         color: white;
@@ -41,17 +45,49 @@
     blockquote p {
         display: inline;
     }
+    input {
+        width: 100%;
+        border: 1px solid #070b12;
+        box-sizing : border-box;
+        box-shadow: none;
+        background-color:#1b2d4b;
+        padding: 10px;
+        color: white;
+    }
     input:focus, textarea:focus, select:focus{
         outline: none;
     }
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #576e94;
+        opacity: 1; /* Firefox */
+    }
+
 </style>
 <body>
-    <bugout-status><i class="fa fa-ban fa-lg" aria-hidden="true" style="color: orange"></i> Waiting for peers...</bugout-status><br>
-    <aviondb-status>Waiting for database...</aviondb-status><p>
-    Name: <br>
-    <input id="name-input"></input><p>
-    Post: <br>
-    <input id="post-input"></input><p>
+    <title>Simple P2P Social Neetwork</title>
+    <aviondb-status></aviondb-status>
+    <div style="width:100%">
+        <div class="pure-menu pure-menu-horizontal pure-menu-scrollable" style="display: flex; justify-content: flex-end">
+            <a href="#" class="pure-menu-link pure-menu-heading">
+                <bugout-status><i class="fa fa-ban fa-lg" aria-hidden="true" style="color: orange"></i>
+                    Waiting
+                </bugout-status>    
+            </a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item">
+                    <a href="#" class="pure-menu-link">
+                        <i class="fa fa-cog fa-lg" aria-hidden="true" style="color:#576e94"></i> 
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+
+            </ul>
+        </div>
+    </div>
+
+
+    <input id="name-input" placeholder="Your name"></input><p>
+    <input id="post-input" placeholder="Create a new post . . ."></input><p>
 
     <main id="feed">
     </main>
