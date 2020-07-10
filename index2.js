@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         inp.name = post.postId
         article.setAttribute('class', 'article')
-        article.innerHTML = post.message
+        article.innerHTML = post.message + "<p>"
 
         feed.insertBefore(article, feed.firstChild)
         .setAttribute("id", post.postId)
