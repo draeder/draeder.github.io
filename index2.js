@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(!identifier){
         let identifier = generateId() 
         localStorage.setItem("Peer ID", identifier)
+        window.history.pushState("","","?r="+identifier);
         //console.log("There was no id, so set one: " + identifier)
     } else {
         //console.log("There was an id: " + identifier)
@@ -20,16 +21,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const url = window.location.href; 
     let urlObject = new URL(url);
     let profileId = urlObject.searchParams.get('r')
-    let arrUrl = profileId.split("-");
-    let serverName = arrUrl[0]
-    let serverId = arrUrl[1] // connect to existing instance
+    //let arrUrl = profileId.split("-");
+    //let serverName = arrUrl[0]
+    let serverId = profileId // connect to existing instance
 
 //// Initialize a Bugout session
     let b = new Bugout(serverId)
     b.on("seen", function(address){
         console.log("Server identifier: " + b.identifier)
+        document.getElementsByTagName("bugout-status")[0].setAttribute("title", "Connected")
         document.getElementsByTagName("bugout-status")[0].innerHTML=
-            "<i class='fa fa-exchange fa-lg' aria-hidden='true' style='color: green'></i> Peers connected!"
+            "<i class='fa fa-exchange fa-lg' aria-hidden='true' style='color: green'></i>"
+        
         //console.log("Seen: " + address)
     })
 
@@ -92,14 +95,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         replies.appendChild(comment, replies)
         .setAttribute("id", reply.replyId)
     }
-    
-    class Posts extends HTMLElement {
-        connectedCallback() {
-          //this.innerHTML = `<h1>Hello, World!</h1>`;
-        }
-      }
-      
-    customElements.define('message-post', Posts);
 
 //// Handle inputs from DOM
     // Get value from *any* input field upon value change
